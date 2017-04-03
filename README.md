@@ -7,6 +7,10 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2016/17
 Izbrali si boste temo, s katero se bo vaš projekt ukvarjal. Tukaj boste
 napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
 
+Analizirala bom zdravje prebivalcev po državah in letih ter spremenljivke, ki vplivajo nanj. Moj cilj je ugotoviti, kako poskrbeti za to, da bi imeli zdravo populacijo.
+
+http://databank.worldbank.org/data/reports.aspx?source=health-nutrition-and-population-statistics#
+
 ## Program
 
 Glavni program in poročilo se nahajata v datoteki `projekt.Rmd`. Ko ga prevedemo,
