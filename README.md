@@ -9,7 +9,10 @@ napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
 
 Analizirala bom zdravje prebivalcev po državah in letih ter spremenljivke, ki vplivajo nanj. Moj cilj je ugotoviti, kako poskrbeti za to, da bi imeli zdravo populacijo.
 
+Viri:
 http://databank.worldbank.org/data/reports.aspx?source=health-nutrition-and-population-statistics#
+http://www.who.int/gho/en/
+https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country
 
 ## Program
 
