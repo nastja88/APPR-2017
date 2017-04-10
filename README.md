@@ -4,9 +4,6 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2016/17
 
 ## Tematika
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal. Tukaj boste
-napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
-
 Analizirala bom najpogostejše bolezni(AIDS, tuberkuloza, malarija, kolera, meningitis, gripa...) po državah in letih ter skušala ugotoviti razlog zanje (npr. podhranjenost, debelost, higijenske razmere, kvaliteta vode, onesnaženost, število plačanih prostih dni...). Moj cilj je ugotoviti, kako poskrbeti za to, da bi imeli kar najbolj zdravo populacijo.
 
 ### Viri:
@@ -14,6 +11,8 @@ Analizirala bom najpogostejše bolezni(AIDS, tuberkuloza, malarija, kolera, meni
 * http://databank.worldbank.org/data/reports.aspx?source=health-nutrition-and-population-statistics# (CSV)
 * http://apps.who.int/gho/data/node.home (CSV)
 * https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country (spletna stran)
+
+V prvi tabeli bodo stolpci označevali državo, leto, spol in bolezen(dimenzije) ter njena pojavnost(meritev). Drugo tabelo pa bodo sestavljali stolpci država, leto in značilnost(dimenzije) ter vrednost značilnosti(meritev).
 
 ## Program
 
