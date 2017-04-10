@@ -12,8 +12,13 @@ Analizirala bom najpogostejše bolezni(AIDS, tuberkuloza, malarija, kolera, meni
 * http://apps.who.int/gho/data/node.home (CSV)
 * https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country (spletna stran)
 
-V prvi tabeli bodo stolpci označevali državo, leto, spol in bolezen (dimenzije) ter njena pojavnost (meritev). Drugo tabelo pa bodo sestavljali stolpci država, leto in značilnost (dimenzije) ter vrednost značilnosti (meritev).
+država | leto | bolezen | pojavnost
+-------|------|---------|----------
+Afganistan|2000|AIDS|1900
 
+država | leto | značilnost | vrednost
+-------|------|------------|---------
+Afganistan | 2004 | stopnja podhranjenosti | 32,9
 ## Program
 
 Glavni program in poročilo se nahajata v datoteki `projekt.Rmd`. Ko ga prevedemo,
