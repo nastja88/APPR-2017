@@ -1,5 +1,7 @@
 # 2. faza: Uvoz podatkov
 
+sl <- locale("sl", decimal_mark = ",", grouping_mark = ".")
+
 # Funkcija, ki uvozi občine iz Wikipedije
 uvozi.obcine <- function() {
   link <- "http://sl.wikipedia.org/wiki/Seznam_ob%C4%8Din_v_Sloveniji"
@@ -11,14 +13,8 @@ uvozi.obcine <- function() {
   tabela$obcina <- gsub("Slovenskih", "Slov.", tabela$obcina)
   tabela$obcina[tabela$obcina == "Kanal ob Soči"] <- "Kanal"
   tabela$obcina[tabela$obcina == "Loški potok"] <- "Loški Potok"
-  for (col in colnames(tabela)) {
-    tabela[tabela[[col]] == "-", col] <- NA
-  }
   for (col in c("povrsina", "prebivalci", "gostota", "naselja", "ustanovitev")) {
-    if (is.numeric(tabela[[col]])) {
-      next()
-    }
-    tabela[[col]] <- gsub("[.*]", "", tabela[[col]]) %>% as.numeric()
+    tabela[[col]] <- parse_number(tabela[[col]], na = "-", locale = sl)
   }
   for (col in c("obcina", "pokrajina", "regija")) {
     tabela[[col]] <- factor(tabela[[col]])
@@ -35,7 +31,7 @@ uvozi.druzine <- function(obcine) {
   data$obcina[data$obcina == "Sveti Jurij"] <- "Sveti Jurij ob Ščavnici"
   data <- data %>% melt(id.vars = "obcina", variable.name = "velikost.druzine",
                         value.name = "stevilo.druzin")
-  data$velikost.druzine <- as.numeric(data$velikost.druzine)
+  data$velikost.druzine <- parse_number(data$velikost.druzine)
   data$obcina <- factor(data$obcina, levels = obcine)
   return(data)
 }
@@ -51,3 +47,36 @@ druzine <- uvozi.druzine(levels(obcine$obcina))
 # datoteko, tukaj pa bi klicali tiste, ki jih potrebujemo v
 # 2. fazi. Seveda bi morali ustrezno datoteko uvoziti v prihodnjih
 # fazah.
+
+
+
+
+worldbank <- read.csv("podatki/uvoz.r", header=TRUE,
+                      col.names=c("serija", "koda serije", "drzava", "koda drzave", 
+                                  "2000", "2001", "2002", "2003", "2004", "2005",
+                                  "2006", "2007", "2008", "2009", "2010", "2011",
+                                  "2012", "2013", "2014", "2015"),
+                      na.strings="..")
+
+# Pojavnost tuberkuloze
+tuberkuloza <- read.csv("podatki/who-tuberculosis", header=TRUE,
+                        col.names=c("drzava", "leto", "pojavnost"))
+
+# Pojavnost kolere
+kolera <- read.csv("podatki/who-cholera", header=TRUE,
+                   col.names=c("drzava", "leto", "pojavnost"))
+
+# Pojavnost prirojenega sifilisa
+sifilis <- read.csv("podatki/who-sifilis", header=TRUE, 
+                    col.names = c("drzava","vir", "leto", "pojavnost"))
+
+# Poraba alkohola (v litrih čistega alkohola) na osebo (15+)
+alkohol <- read.csv("podatki/who-alcohol", skip=1, header=TRUE,
+                    col.names=c("drzava", "vir", "tip pijace", "2015", "2014", "2013",
+                                "2012", "2011", "2010", "2009", "2008", "2007", "2006",
+                                "2005", "2004", "2003", "2002", "2001", "2000"), 
+                    na.strings="")
+
+# Razširjenost kajenja tobačnih izdelkov 15+
+tobak <- read.csv("podatki/who-tabacco", skip=1, header=TRUE,
+                  col.names=c("drzava","leto", "moski", "zenske"), na.strings="")
