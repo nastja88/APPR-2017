@@ -5,6 +5,7 @@ library(dplyr)
 library(gsubfn)
 library(rvest)
 library(reshape2)
+library(tidyr)
 
 worldbank <- read_csv("podatki/worldbank.csv", skip=1,
                       col_names=c("serija", "kodaserije", "drzava", "kodadrzave", 
@@ -70,9 +71,4 @@ tobak <- melt(tobak, id.vars=c("drzava", "leto"), measure.vars=c("moski", "zensk
 link <- "https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country"
 stran <- html_session(link) %>% read_html()
 tabela <- stran %>% html_nodes(xpath="//table[@class='wikitable sortable']") %>% 
-  .[[1]] %>% html_table(dec = ".")
-tabela$`Minimum annual leave` <- NULL
-tabela$`Paid public holidays[3][4]` <- NULL
-colnames(tabela) <- c("drzava", "dop", "dopust")
-tabela$dop <- NULL
-tabela <- filter(tabela, !is.na(dopust))
+  .[[1]] %>% html_table(dec = ".") %>% select(drzava = 1, dopust = 5) %>% drop_na(dopust)
