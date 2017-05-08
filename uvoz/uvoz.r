@@ -4,7 +4,7 @@ library(readr)
 library(dplyr)
 library(gsubfn)
 library(rvest)
-library(reshape)
+library(reshape2)
 
 worldbank <- read_csv("podatki/worldbank.csv", skip=1,
                       col_names=c("serija", "kodaserije", "drzava", "kodadrzave", 
@@ -14,6 +14,14 @@ worldbank <- read_csv("podatki/worldbank.csv", skip=1,
                       na="..", locale=locale(encoding = "UTF-8"))
 worldbank$kodadrzave <- NULL
 worldbank$kodaserije <- NULL
+worldbank <- melt(worldbank, id.vars=c("serija", "drzava"), variable.name="leto", value.name="pojavnost")
+worldbank <- filter(worldbank,  !is.na(pojavnost))
+
+# for(drzava in worldbank$drzava) {
+#   if (drzava=="Bahamas, The") {
+#     drzava <- "Bahamas"
+#   }
+# }
 
 # Pojavnost tuberkuloze
 
@@ -42,6 +50,8 @@ alkohol <- read_csv("podatki/who-alcohol.csv", skip=2,
                     na=c("", "No data"), locale=locale(encoding = "UTF-8"))
 alkohol$vir <- NULL
 alkohol$tippijace <- NULL
+alkohol <- melt(alkohol, id.vars=c("drzava"), variable.name="leto", value.name="poraba")
+alkohol <- filter(alkohol,  !is.na(poraba))
 
 # Razširjenost kajenja tobačnih izdelkov 15+
 tobak <- read_csv("podatki/who-tabacco.csv", skip=2, 
@@ -52,7 +62,9 @@ tobak$moski <- tobak$moski %>% strapplyc("^[0-9. ]+") %>%
   unlist() %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
 tobak$zenske <- tobak$zenske %>% strapplyc("^[0-9. ]+") %>% 
   unlist() %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
-tobak <- melt(tobak, id.vars=c("drzava", "leto"))
+tobak <- melt(tobak, id.vars=c("drzava", "leto"), measure.vars=c("moski", "zenske"), 
+              variable.name="spol", value.name="pojavnost")
+
 
 # Število plačanih prostih dni
 link <- "https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country"
