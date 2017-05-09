@@ -52,20 +52,26 @@ alkohol <- read_csv("podatki/who-alcohol.csv", skip=2,
 alkohol$vir <- NULL
 alkohol$tippijace <- NULL
 alkohol <- melt(alkohol, id.vars=c("drzava"), variable.name="leto", value.name="poraba")
-alkohol <- filter(alkohol,  !is.na(poraba))
+alkohol <- alkohol %>% drop_na()
+alkohol$leto <- alkohol$leto %>% parse_number()
+alkohol$razlog <- "alkohol"
 
 # Razširjenost kajenja tobačnih izdelkov 15+
 tobak <- read_csv("podatki/who-tabacco.csv", skip=2, 
-                  col_names=c("drzava", "leto", "moski", "zenske"), na="",
+                  col_names=c("drzava", "leto", "m", "z"), na="",
                   locale=locale(encoding = "UTF-8"))
-tobak <- filter(tobak,  moski!="")
-tobak$moski <- tobak$moski %>% strapplyc("^[0-9. ]+") %>% 
+tobak <- filter(tobak,  m!="")
+tobak$m <- tobak$m %>% strapplyc("^[0-9. ]+") %>% 
   unlist() %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
-tobak$zenske <- tobak$zenske %>% strapplyc("^[0-9. ]+") %>% 
+tobak$z <- tobak$z %>% strapplyc("^[0-9. ]+") %>% 
   unlist() %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
-tobak <- melt(tobak, id.vars=c("drzava", "leto"), measure.vars=c("moski", "zenske"), 
+tobak <- melt(tobak, id.vars=c("drzava", "leto"), measure.vars=c("m", "z"), 
               variable.name="spol", value.name="pojavnost")
+tobak$spol %>% parse_character()
+tobak$razlog <- "tobak"
 
+# Združena tabela za alkohol in tobak
+alktob <- inner_join(alkohol, tobak)
 
 # Število plačanih prostih dni
 link <- "https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country"
