@@ -31,6 +31,7 @@ tuberkuloza <- read_csv("podatki/who-tuberculosis.csv", skip=1,
                         locale = locale(encoding = "UTF-8"))
 tuberkuloza$pojavnost <- tuberkuloza$pojavnost %>% strapplyc("^[0-9 ]+") %>% 
   unlist() %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
+tuberkuloza$pojavnost <- tuberkuloza$pojavnost / 1000   #hočemo procente
 
 # Pojavnost kolere
 kolera <- read_csv("podatki/who-cholera.csv", skip=1,
@@ -38,10 +39,11 @@ kolera <- read_csv("podatki/who-cholera.csv", skip=1,
                    locale=locale(encoding = "UTF-8"))
 
 # Pojavnost prirojenega sifilisa
-sifilis <- read_csv("podatki/who-sifilis.csv", skip=1, 
+sifilis <- read_csv("podatki/who-syphilis.csv", skip=1, 
                     col_names = c("drzava","vir", "leto", "pojavnost"), 
                     locale=locale(encoding = "UTF-8"))
 sifilis$vir <- NULL
+sifilis$pojavnost <- sifilis$pojavnost / 1000   #procenti
 
 # Poraba alkohola (v litrih čistega alkohola) na osebo (15+)
 alkohol <- read_csv("podatki/who-alcohol.csv", skip=2, 
