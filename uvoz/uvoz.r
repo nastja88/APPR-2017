@@ -17,6 +17,13 @@ worldbank$kodadrzave <- NULL
 worldbank$kodaserije <- NULL
 worldbank <- melt(worldbank, id.vars=c("serija", "drzava"), variable.name="leto", value.name="pojavnost")
 worldbank <- filter(worldbank,  !is.na(pojavnost))
+worldbank$serija <- as.factor(worldbank$serija)
+levels(worldbank$serija) <- list(voda="Improved water source (% of population with access)", 
+                                 denar="Health expenditure per capita, PPP",
+                                 hiv="Prevalence of HIV, total (% of population ages 15-49)",
+                                 malarija="Malaria cases reported",
+                                 podhranjenost="Malnutrition prevalence, weight for age (% of children under 5)",
+                                 debelost="Prevalence of overweight (% of children under 5)")
 
 # for(drzava in worldbank$drzava) {
 #   if (drzava=="Bahamas, The") {
