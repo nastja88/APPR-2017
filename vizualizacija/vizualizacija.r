@@ -1,13 +1,16 @@
 # 3. faza: Vizualizacija podatkov
 
-# Uvozimo zemljevid.
-zemljevid <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/OB.zip",
-                             "OB/OB", encoding = "Windows-1250")
-levels(zemljevid$OB_UIME) <- levels(zemljevid$OB_UIME) %>%
-  { gsub("Slovenskih", "Slov.", .) } %>% { gsub("-", " - ", .) }
-zemljevid$OB_UIME <- factor(zemljevid$OB_UIME, levels = levels(obcine$obcina))
-zemljevid <- pretvori.zemljevid(zemljevid)
+library(ggplot2)
+library(dplyr)
+library(sp)
+library(maptools)
+library(digest)
+gpclibPermit()
 
-# Izračunamo povprečno velikost družine
-povprecja <- druzine %>% group_by(obcina) %>%
-  summarise(povprecje = sum(velikost.druzine * stevilo.druzin) / sum(stevilo.druzin))
+source(lib/uvozi.zemljevid.r)
+
+uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip",
+                "ne_110m_admin_0_countries/ne_110m_admin_0_countries")
+
+ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_point()
+ggplot(sifilis) + aes(x=leto, y=pojavnost) + geom_point()

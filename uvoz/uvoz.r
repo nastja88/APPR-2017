@@ -25,6 +25,8 @@ levels(worldbank$serija) <- list(voda="Improved water source (% of population wi
                                  podhranjenost="Malnutrition prevalence, weight for age (% of children under 5)",
                                  debelost="Prevalence of overweight (% of children under 5)")
 
+# worldbank$drzava <- as.factor(worldbank$drzava)
+
 # for(drzava in worldbank$drzava) {
 #   if (drzava=="Bahamas, The") {
 #     drzava <- "Bahamas"
@@ -75,6 +77,9 @@ tobak$zenske <- tobak$zenske %>% strapplyc("^[0-9. ]+") %>%
 tobak <- melt(tobak, id.vars=c("drzava", "leto"), measure.vars=c("moski", "zenske"), 
               variable.name="spol", value.name="pojavnost")
 
+# world <- unique(worldbank$drzava) %>% sort()
+# tuber <- unique(tuberkuloza$drzava) %>% sort()
+# razlicni <- world != tuber
 
 # Število plačanih prostih dni
 link <- "https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country"
