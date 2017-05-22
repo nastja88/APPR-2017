@@ -38,6 +38,10 @@ Uvozili smo podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spl
 
 # Analiza in vizualizacija podatkov
 
+```{r uvoz, echo=FALSE, message=FALSE}
+source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
+```
+
 ***
 
 # Napredna analiza podatkov
