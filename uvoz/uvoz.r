@@ -24,6 +24,10 @@ levels(worldbank$serija) <- list(voda="Improved water source (% of population wi
                                  malarija="Malaria cases reported",
                                  podhranjenost="Malnutrition prevalence, weight for age (% of children under 5)",
                                  debelost="Prevalence of overweight (% of children under 5)")
+bolezni <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
+  rename(bolezen = serija)
+znacilnosti <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija") %>% 
+  rename(znacilnost = serija)
 
 # worldbank$drzava <- as.factor(worldbank$drzava)
 
@@ -64,6 +68,7 @@ alkohol$vir <- NULL
 alkohol$tippijace <- NULL
 alkohol <- melt(alkohol, id.vars=c("drzava"), variable.name="leto", value.name="poraba")
 alkohol <- filter(alkohol,  !is.na(poraba))
+alkohol$poraba %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
 
 # Razširjenost kajenja tobačnih izdelkov 15+
 tobak <- read_csv("podatki/who-tabacco.csv", skip=2, 
