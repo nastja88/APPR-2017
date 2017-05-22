@@ -24,16 +24,11 @@ levels(worldbank$serija) <- list(voda="Improved water source (% of population wi
                                  malarija="Malaria cases reported",
                                  podhranjenost="Malnutrition prevalence, weight for age (% of children under 5)",
                                  debelost="Prevalence of overweight (% of children under 5)")
-<<<<<<< HEAD
-bolezni <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija")
-# rename(bolezni, serija = bolezen)
-znacilnosti <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija")
-=======
+
 bolezni <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
   rename(bolezen = serija)
 znacilnosti <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija") %>% 
   rename(znacilnost = serija)
->>>>>>> 51c064147d7487c8220e252092b62644f6582124
 
 # worldbank$drzava <- as.factor(worldbank$drzava)
 
