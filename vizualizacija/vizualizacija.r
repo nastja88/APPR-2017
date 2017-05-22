@@ -51,26 +51,14 @@ pretvori.zemljevid <- function(zemljevid) {
 svet <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip",
                        "ne_110m_admin_0_countries") %>% pretvori.zemljevid()
 
-ggplot() + geom_polygon(data = svet, aes(x = long, y = lat, group = group))
+ggplot() + geom_polygon(data = svet, aes(x = long, y = lat, group = group)) + theme_void()
 
 #??
-ggplot() + geom_polygon(data = inner_join(svet, alkohol, by=c("sovereignt" = "drzava")), 
-                        aes(x = long, y = lat, group = group, fill=poraba)) + facet_grid(leto~.)
+ggplot() + geom_polygon(data = inner_join(svet, filter(alkohol, alkohol$leto == 2010), by=c("sovereignt" = "drzava")), 
+                        aes(x = long, y = lat, group = group, fill=poraba)) + theme_void()
 
-ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="pojavnost [%]")
+ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="pojavnost kajenja [%]")
 ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnost) + geom_boxplot() + theme_bw() + labs(y="število")
 
-# alko <- alkohol %>% group_by(leto) %>% summarise(mean(poraba))
-# ggplot(alko) + aes(x=leto, y=mean(poraba)) + geom_line()
-
-<<<<<<< HEAD
-ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter()
-ggplot(filter(worldbank, worldbank$serija=="malarija")) + aes(x=leto, y=pojavnost) + geom_point()
-
-
-ggplot(alkohol) + aes(x=leto, y=poraba) + geom_jitter()
-=======
->>>>>>> 51c064147d7487c8220e252092b62644f6582124
-ggplot(sifilis) + aes(x=leto, y=pojavnost) + geom_point()
-
-       
+alko <- alkohol %>% group_by(leto) %>% summarise(povprecje = mean(poraba))
+ggplot(alko) + aes(x=leto, y=povprecje) + geom_point()
