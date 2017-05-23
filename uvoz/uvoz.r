@@ -25,18 +25,16 @@ levels(worldbank$serija) <- list(voda="Improved water source (% of population wi
                                  podhranjenost="Malnutrition prevalence, weight for age (% of children under 5)",
                                  debelost="Prevalence of overweight (% of children under 5)")
 
+worldbank$drzava[worldbank$drzava == "Bahamas, The"] <- "The Bahamas"
+worldbank$drzava[worldbank$drzava == "Serbia"] <- "Republic of Serbia"
+worldbank$drzava[worldbank$drzava == "Congo, Rep."] <- "Republic of Congo"
+
 bolezni <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
   rename(bolezen = serija)
 znacilnosti <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija") %>% 
   rename(znacilnost = serija)
 
 # worldbank$drzava <- as.factor(worldbank$drzava)
-
-# for(drzava in worldbank$drzava) {
-#   if (drzava=="Bahamas, The") {
-#     drzava <- "Bahamas"
-#   }
-# }
 
 # Pojavnost tuberkuloze
 
@@ -47,10 +45,11 @@ tuberkuloza$pojavnost <- tuberkuloza$pojavnost %>% strapplyc("^[0-9 ]+") %>%
   unlist() %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
 tuberkuloza$pojavnost <- tuberkuloza$pojavnost / 1000   #hočemo procente
 
-# Pojavnost kolere
-kolera <- read_csv("podatki/who-cholera.csv", skip=1,
-                   col_names=c("drzava", "leto", "pojavnost"), 
-                   locale=locale(encoding = "UTF-8"))
+tuberkuloza$drzava[tuberkuloza$drzava == "Bahamas"] <- "The Bahamas"
+tuberkuloza$drzava[tuberkuloza$drzava == "Bolivia (Plurinational State of)"] <- "Bolivia"
+tuberkuloza$drzava[tuberkuloza$drzava == "Serbia"] <- "Republic of Serbia"
+tuberkuloza$drzava[tuberkuloza$drzava == "Congo"] <- "Republic of Congo"
+tuberkuloza$drzava[tuberkuloza$drzava == "Côte d'Ivoire"] <- "Cote d'Ivoire"
 
 # Pojavnost prirojenega sifilisa
 sifilis <- read_csv("podatki/who-syphilis.csv", skip=1, 
@@ -58,6 +57,11 @@ sifilis <- read_csv("podatki/who-syphilis.csv", skip=1,
                     locale=locale(encoding = "UTF-8"))
 sifilis$vir <- NULL
 sifilis$pojavnost <- sifilis$pojavnost / 1000   #procenti
+
+# Pojavnost kolere
+kolera <- read_csv("podatki/who-cholera.csv", skip=1,
+                   col_names=c("drzava", "leto", "pojavnost"), 
+                   locale=locale(encoding = "UTF-8"))
 
 # Poraba alkohola (v litrih čistega alkohola) na osebo (15+)
 alkohol <- read_csv("podatki/who-alcohol.csv", skip=2, 

@@ -50,8 +50,8 @@ pretvori.zemljevid <- function(zemljevid) {
 
 svet <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip",
                        "ne_110m_admin_0_countries") %>% pretvori.zemljevid()
-
-ggplot() + geom_polygon(data = svet, aes(x = long, y = lat, group = group)) + theme_void()
+# osnovni zemljevid sveta
+# ggplot() + geom_polygon(data = svet, aes(x = long, y = lat, group = group)) + theme_void()
 
 # Kako dodam drzave za katere ni podatka?
 ggplot() + geom_polygon(data = inner_join(svet, filter(alkohol, alkohol$leto == 2010), by=c("sovereignt" = "drzava")), 
@@ -62,9 +62,9 @@ ggplot() + geom_polygon(data = inner_join(svet, filter(tobak, tobak$leto == 2010
                         aes(x = long, y = lat, group = group, fill=pojavnost)) + theme_void() + ggtitle("Pojavnost kajenja med ženskami v letu 2010 [%]") + theme(plot.title = element_text(hjust = 0.5))
 
 ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="pojavnost kajenja [%]")
-ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnost) + geom_boxplot() + theme_bw() + labs(y="število")
+ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnost) + geom_boxplot() + theme_bw() + labs(y="število obolelih")
 
 # Zakaj mi graf izrise padajoce po letih?
 alko <- alkohol %>% group_by(leto) %>% summarise(povprecje = mean(poraba)) 
 alko <- alko[order(alko$leto), ]
-ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + theme_bw() + labs(y="globalna poraba alkohola [%]")
+ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + theme_bw() + labs(y="globalna poraba alkohola(15+) [liter čistega alkohola]")

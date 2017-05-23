@@ -31,14 +31,25 @@ Analizirala bom nekaj najpogostejših bolezni(AIDS, tuberkuloza, malarija, koler
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-Uvozili smo podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij The world bank in World Health Organisation ter v obliki HTML z Wikipedije. Poglejmo si začetka uvoženih razpredelnic.
+Uvozili sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij The world bank in World Health Organisation ter v obliki HTML z Wikipedije. Prilagam začetke uvoženih razpredelnic.
+
+```{r tabele, echo=FALSE, message=FALSE}
+kable(head(bolezni))
+kable(head(kolera))
+kable(head(sifilis))
+kable(head(tuberkuloza))
+kable(head(znacilnosti))
+kable(head(tobak))
+kable(head(alkohol))
+kable(head(tabela))
+```
 
 
 ***
 
 # Analiza in vizualizacija podatkov
 
-```{r uvoz, echo=FALSE, message=FALSE}
+```{r vizualizacija, echo=FALSE, message=FALSE}
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
