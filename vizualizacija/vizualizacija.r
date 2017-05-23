@@ -53,12 +53,18 @@ svet <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthd
 
 ggplot() + geom_polygon(data = svet, aes(x = long, y = lat, group = group)) + theme_void()
 
-#??
+# Kako dodam drzave za katere ni podatka?
 ggplot() + geom_polygon(data = inner_join(svet, filter(alkohol, alkohol$leto == 2010), by=c("sovereignt" = "drzava")), 
-                        aes(x = long, y = lat, group = group, fill=poraba)) + theme_void()
+                        aes(x = long, y = lat, group = group, fill=poraba)) + theme_void() + ggtitle("Poraba alkohola(15+) v letu 2010 [liter čistega alkohola]") + theme(plot.title = element_text(hjust = 0.5))
+ggplot() + geom_polygon(data = inner_join(svet, filter(tobak, tobak$leto == 2010 & tobak$spol == "moski"), by=c("sovereignt" = "drzava")), 
+                        aes(x = long, y = lat, group = group, fill=pojavnost)) + theme_void() + ggtitle("Pojavnost kajenja med moškimi v letu 2010 [%]") + theme(plot.title = element_text(hjust = 0.5))
+ggplot() + geom_polygon(data = inner_join(svet, filter(tobak, tobak$leto == 2010 & tobak$spol == "zenske"), by=c("sovereignt" = "drzava")), 
+                        aes(x = long, y = lat, group = group, fill=pojavnost)) + theme_void() + ggtitle("Pojavnost kajenja med ženskami v letu 2010 [%]") + theme(plot.title = element_text(hjust = 0.5))
 
 ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="pojavnost kajenja [%]")
 ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnost) + geom_boxplot() + theme_bw() + labs(y="število")
 
-alko <- alkohol %>% group_by(leto) %>% summarise(povprecje = mean(poraba))
-ggplot(alko) + aes(x=leto, y=povprecje) + geom_point()
+# Zakaj mi graf izrise padajoce po letih?
+alko <- alkohol %>% group_by(leto) %>% summarise(povprecje = mean(poraba)) 
+alko <- alko[order(alko$leto), ]
+ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + theme_bw() + labs(y="globalna poraba alkohola [%]")
