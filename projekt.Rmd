@@ -31,7 +31,7 @@ Analizirala bom nekaj najpogostejših bolezni(AIDS, tuberkuloza, malarija, koler
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-Uvozili sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij The world bank in World Health Organisation ter v obliki HTML z Wikipedije. Prilagam začetke uvoženih razpredelnic.
+Uvozila sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij The world bank in World Health Organisation ter v obliki HTML z Wikipedije. Prilagam začetke uvoženih razpredelnic.
 
 ```{r tabele, echo=FALSE, message=FALSE}
 kable(head(bolezni))
@@ -43,7 +43,6 @@ kable(head(tobak))
 kable(head(alkohol))
 kable(head(tabela))
 ```
-
 
 ***
 
