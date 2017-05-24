@@ -28,6 +28,20 @@ levels(worldbank$serija) <- list(voda="Improved water source (% of population wi
 worldbank$drzava[worldbank$drzava == "Bahamas, The"] <- "The Bahamas"
 worldbank$drzava[worldbank$drzava == "Serbia"] <- "Republic of Serbia"
 worldbank$drzava[worldbank$drzava == "Congo, Rep."] <- "Republic of Congo"
+worldbank$drzava[worldbank$drzava == "Congo, Dem. Rep."] <- "Democratic Republic of the Congo"
+worldbank$drzava[worldbank$drzava == "Egypt, Arab Rep."] <- "Egypt"
+worldbank$drzava[worldbank$drzava == "Gambia, The"] <- "Gambia"
+worldbank$drzava[worldbank$drzava == "Iran, Islamic Rep."] <- "Iran"
+worldbank$drzava[worldbank$drzava == "Korea, Dem. People’s Rep."] <- "North Korea"
+worldbank$drzava[worldbank$drzava == "Korea, Rep."] <- "South Korea"
+worldbank$drzava[worldbank$drzava == "Kyrgyz Republic"] <- "Kyrgyzstan"
+worldbank$drzava[worldbank$drzava == "Macedonia, FYR"] <- "Macedonia"
+worldbank$drzava[worldbank$drzava == "Micronesia, Fed. Sts."] <- "Federated States of Micronesia"
+worldbank$drzava[worldbank$drzava == "Slovak Republic"] <- "Slovakia"
+worldbank$drzava[worldbank$drzava == "Tanzania"] <- "United Republic of Tanzania"
+worldbank$drzava[worldbank$drzava == "United States"] <- "United States of America"
+worldbank$drzava[worldbank$drzava == "Venezuela, RB"] <- "Venezuela"
+worldbank$drzava[worldbank$drzava == "Yemen, Rep."] <- "Yemen"
 
 bolezni <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
   rename(bolezen = serija)
@@ -50,6 +64,19 @@ tuberkuloza$drzava[tuberkuloza$drzava == "Bolivia (Plurinational State of)"] <- 
 tuberkuloza$drzava[tuberkuloza$drzava == "Serbia"] <- "Republic of Serbia"
 tuberkuloza$drzava[tuberkuloza$drzava == "Congo"] <- "Republic of Congo"
 tuberkuloza$drzava[tuberkuloza$drzava == "Côte d'Ivoire"] <- "Cote d'Ivoire"
+tuberkuloza$drzava[tuberkuloza$drzava == "Czechia"] <- "Czech Republic"
+tuberkuloza$drzava[tuberkuloza$drzava == "Democratic People's Republic of Korea"] <- "North Korea"
+tuberkuloza$drzava[tuberkuloza$drzava == "Iran (Islamic Republic of)"] <- "Iran"
+tuberkuloza$drzava[tuberkuloza$drzava == "Lao People's Democratic Republic"] <- "Lao PDR"
+tuberkuloza$drzava[tuberkuloza$drzava == "Republic of Korea"] <- "South Korea"
+tuberkuloza$drzava[tuberkuloza$drzava == "The former Yugoslav republic of Macedonia"] <- "Macedonia"
+tuberkuloza$drzava[tuberkuloza$drzava == "Micronesia (Federated States of)"] <- "Federated States of Micronesia"
+tuberkuloza$drzava[tuberkuloza$drzava == "Saint Kitts and Nevis"] <- "St. Kitts and Nevis"
+tuberkuloza$drzava[tuberkuloza$drzava == "Saint Lucia"] <- "St. Lucia"
+tuberkuloza$drzava[tuberkuloza$drzava == "Saint Vincent and the Grenadines"] <- "St. Vincent and the Grenadines"
+tuberkuloza$drzava[tuberkuloza$drzava == "United Kingdom of Great Britain and Northern Ireland"] <- "United Kingdom"
+tuberkuloza$drzava[tuberkuloza$drzava == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
+tuberkuloza$drzava[tuberkuloza$drzava == "Viet Nam"] <- "Vietnam"
 
 # Pojavnost prirojenega sifilisa
 sifilis <- read_csv("podatki/who-syphilis.csv", skip=1, 
