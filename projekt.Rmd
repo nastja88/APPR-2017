@@ -35,12 +35,8 @@ Uvozila sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spl
 
 ```{r tabele, echo=FALSE, message=FALSE}
 kable(head(bolezni))
-kable(head(kolera))
-kable(head(sifilis))
-kable(head(tuberkuloza))
 kable(head(znacilnosti))
 kable(head(tobak))
-kable(head(alkohol))
 kable(head(tabela))
 ```
 

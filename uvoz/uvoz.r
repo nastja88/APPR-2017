@@ -50,9 +50,9 @@ worldbank$drzava[worldbank$drzava == "United States"] <- "United States of Ameri
 worldbank$drzava[worldbank$drzava == "Venezuela, RB"] <- "Venezuela"
 worldbank$drzava[worldbank$drzava == "Yemen, Rep."] <- "Yemen"
 
-bolezni <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
+bol <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
   rename(bolezen = serija)
-znacilnosti <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija") %>% 
+znac <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija") %>% 
   rename(znacilnost = serija)
 
 # worldbank$drzava <- as.factor(worldbank$drzava)
@@ -65,42 +65,22 @@ tuberkuloza <- read_csv("podatki/who-tuberculosis.csv", skip=1,
 tuberkuloza$pojavnost <- tuberkuloza$pojavnost %>% strapplyc("^[0-9 ]+") %>% 
   unlist() %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
 tuberkuloza$pojavnost <- tuberkuloza$pojavnost / 1000   #hočemo procente
-
-tuberkuloza$drzava[tuberkuloza$drzava == "Bahamas"] <- "The Bahamas"
-tuberkuloza$drzava[tuberkuloza$drzava == "Bolivia (Plurinational State of)"] <- "Bolivia"
-tuberkuloza$drzava[tuberkuloza$drzava == "Brunei Darussalam"] <- "Brunei"
-tuberkuloza$drzava[tuberkuloza$drzava == "Congo"] <- "Republic of Congo"
-tuberkuloza$drzava[tuberkuloza$drzava == "Côte d'Ivoire"] <- "Ivory Coast"
-tuberkuloza$drzava[tuberkuloza$drzava == "Czechia"] <- "Czech Republic"
-tuberkuloza$drzava[tuberkuloza$drzava == "Democratic People's Republic of Korea"] <- "North Korea"
-tuberkuloza$drzava[tuberkuloza$drzava == "Guinea-Bissau"] <- "Guinea Bissau"
-tuberkuloza$drzava[tuberkuloza$drzava == "Iran (Islamic Republic of)"] <- "Iran"
-tuberkuloza$drzava[tuberkuloza$drzava == "Lao People's Democratic Republic"] <- "Laos"
-tuberkuloza$drzava[tuberkuloza$drzava == "Micronesia (Federated States of)"] <- "Federated States of Micronesia"
-tuberkuloza$drzava[tuberkuloza$drzava == "Republic of Korea"] <- "South Korea"
-tuberkuloza$drzava[tuberkuloza$drzava == "Russian Federation"] <- "Russia"
-tuberkuloza$drzava[tuberkuloza$drzava == "Saint Kitts and Nevis"] <- "St. Kitts and Nevis"
-tuberkuloza$drzava[tuberkuloza$drzava == "Saint Lucia"] <- "St. Lucia"
-tuberkuloza$drzava[tuberkuloza$drzava == "Saint Vincent and the Grenadines"] <- "St. Vincent and the Grenadines"
-tuberkuloza$drzava[tuberkuloza$drzava == "Serbia"] <- "Republic of Serbia"
-tuberkuloza$drzava[tuberkuloza$drzava == "Syrian Arab Republic"] <- "Syria"
-tuberkuloza$drzava[tuberkuloza$drzava == "Timor-Leste"] <- "East Timor"
-tuberkuloza$drzava[tuberkuloza$drzava == "The former Yugoslav republic of Macedonia"] <- "Macedonia"
-tuberkuloza$drzava[tuberkuloza$drzava == "United Kingdom of Great Britain and Northern Ireland"] <- "United Kingdom"
-tuberkuloza$drzava[tuberkuloza$drzava == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
-tuberkuloza$drzava[tuberkuloza$drzava == "Viet Nam"] <- "Vietnam"
+tuberkuloza$bolezen <- "tuberkuloza"
 
 # Pojavnost prirojenega sifilisa
 sifilis <- read_csv("podatki/who-syphilis.csv", skip=1, 
                     col_names = c("drzava","vir", "leto", "pojavnost"), 
                     locale=locale(encoding = "UTF-8"))
+sifilis <- filter(sifilis,  !is.na(leto))
 sifilis$vir <- NULL
 sifilis$pojavnost <- sifilis$pojavnost / 1000   #procenti
+sifilis$bolezen <- "sifilis"
 
 # Pojavnost kolere
 kolera <- read_csv("podatki/who-cholera.csv", skip=1,
                    col_names=c("drzava", "leto", "pojavnost"), 
                    locale=locale(encoding = "UTF-8"))
+kolera$bolezen <- "kolera"
 
 # Poraba alkohola (v litrih čistega alkohola) na osebo (15+)
 alkohol <- read_csv("podatki/who-alcohol.csv", skip=2, 
@@ -110,9 +90,40 @@ alkohol <- read_csv("podatki/who-alcohol.csv", skip=2,
                     na=c("", "No data"), locale=locale(encoding = "UTF-8"))
 alkohol$vir <- NULL
 alkohol$tippijace <- NULL
-alkohol <- melt(alkohol, id.vars=c("drzava"), variable.name="leto", value.name="poraba")
-alkohol <- filter(alkohol,  !is.na(poraba))
-alkohol$poraba %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
+alkohol <- melt(alkohol, id.vars=c("drzava"), variable.name="leto", value.name="pojavnost")
+alkohol <- filter(alkohol,  !is.na(pojavnost))
+alkohol$pojavnost %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
+alkohol$bolezen <- "alkohol"
+
+who <- rbind(tuberkuloza, sifilis, kolera, alkohol)
+
+who$drzava[who$drzava == "Bahamas"] <- "The Bahamas"
+who$drzava[who$drzava == "Bolivia (Plurinational State of)"] <- "Bolivia"
+who$drzava[who$drzava == "Brunei Darussalam"] <- "Brunei"
+who$drzava[who$drzava == "Congo"] <- "Republic of Congo"
+who$drzava[who$drzava == "Côte d'Ivoire"] <- "Ivory Coast"
+who$drzava[who$drzava == "Czechia"] <- "Czech Republic"
+who$drzava[who$drzava == "Democratic People's Republic of Korea"] <- "North Korea"
+who$drzava[who$drzava == "Guinea-Bissau"] <- "Guinea Bissau"
+who$drzava[who$drzava == "Iran (Islamic Republic of)"] <- "Iran"
+who$drzava[who$drzava == "Lao People's Democratic Republic"] <- "Laos"
+who$drzava[who$drzava == "Micronesia (Federated States of)"] <- "Federated States of Micronesia"
+who$drzava[who$drzava == "Republic of Korea"] <- "South Korea"
+who$drzava[who$drzava == "Republic of Moldova"] <- "Moldova"
+who$drzava[who$drzava == "Russian Federation"] <- "Russia"
+who$drzava[who$drzava == "Saint Kitts and Nevis"] <- "St. Kitts and Nevis"
+who$drzava[who$drzava == "Saint Lucia"] <- "St. Lucia"
+who$drzava[who$drzava == "Saint Vincent and the Grenadines"] <- "St. Vincent and the Grenadines"
+who$drzava[who$drzava == "Serbia"] <- "Republic of Serbia"
+who$drzava[who$drzava == "Syrian Arab Republic"] <- "Syria"
+who$drzava[who$drzava == "Timor-Leste"] <- "East Timor"
+who$drzava[who$drzava == "The former Yugoslav republic of Macedonia"] <- "Macedonia"
+who$drzava[who$drzava == "United Kingdom of Great Britain and Northern Ireland"] <- "United Kingdom"
+who$drzava[who$drzava == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
+who$drzava[who$drzava == "Viet Nam"] <- "Vietnam"
+
+bole <- filter(who, who$bolezen != "alkohol")
+alkohol <- filter(who, who$bolezen == "alkohol") %>% rename(znacilnost = bolezen)
 
 # Razširjenost kajenja tobačnih izdelkov 15+
 tobak <- read_csv("podatki/who-tabacco.csv", skip=2, 
@@ -126,6 +137,19 @@ tobak$zenske <- tobak$zenske %>% strapplyc("^[0-9. ]+") %>%
 tobak <- melt(tobak, id.vars=c("drzava", "leto"), measure.vars=c("moski", "zenske"), 
               variable.name="spol", value.name="pojavnost")
 
+tobak$drzava[tobak$drzava == "Bolivia (Plurinational State of)"] <- "Bolivia"
+tobak$drzava[tobak$drzava == "Brunei Darussalam"] <- "Brunei"
+tobak$drzava[tobak$drzava == "Congo"] <- "Republic of Congo"
+tobak$drzava[tobak$drzava == "Czechia"] <- "Czech Republic"
+tobak$drzava[tobak$drzava == "Iran (Islamic Republic of)"] <- "Iran"
+tobak$drzava[tobak$drzava == "Lao People's Democratic Republic"] <- "Laos"
+tobak$drzava[tobak$drzava == "Republic of Korea"] <- "South Korea"
+tobak$drzava[tobak$drzava == "Republic of Moldova"] <- "Moldova"
+tobak$drzava[tobak$drzava == "Russian Federation"] <- "Russia"
+tobak$drzava[tobak$drzava == "Serbia"] <- "Republic of Serbia"
+tobak$drzava[tobak$drzava == "United Kingdom of Great Britain and Northern Ireland"] <- "United Kingdom"
+tobak$drzava[tobak$drzava == "Viet Nam"] <- "Vietnam"
+
 # world <- unique(worldbank$drzava) %>% sort()
 # tuber <- unique(tuberkuloza$drzava) %>% sort()
 # razlicni <- world != tuber
@@ -135,3 +159,17 @@ link <- "https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country"
 stran <- html_session(link) %>% read_html()
 tabela <- stran %>% html_nodes(xpath="//table[@class='wikitable sortable']") %>% 
   .[[1]] %>% html_table(dec = ".") %>% select(drzava = 1, dopust = 5) %>% drop_na(dopust)
+
+tabela$drzava[tabela$drzava == "Brunei Darussalam"] <- "Brunei"
+tabela$drzava[tabela$drzava == "Cape Verde"] <- "Cabo Verde"
+tabela$drzava[tabela$drzava == "Serbia"] <- "Republic of Serbia"
+tabela$drzava[tabela$drzava == "Tanzania"] <- "United Republic of Tanzania"
+tabela$drzava[tabela$drzava == "United States"] <- "United States of America"
+
+bolezni <- rbind(bol, bole)
+bolezni$drzava %>% as.factor()
+
+znacilnosti <- rbind(znac, alkohol)
+znacilnosti$drzava %>% as.factor()
+
+rm(bol, bole, kolera, sifilis, tuberkuloza, alkohol, worldbank, znac, who)
