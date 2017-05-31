@@ -10,7 +10,7 @@ output:
 runtime: shiny
 ---
 
-```{r setup, echo=FALSE, results='hide', message=FALSE}
+```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # Če želimo nastaviti pisave v PDF-ju, odkomentiramo
 # in sledimo navodilom v programu.
 #source("fontconfig.r", encoding = "UTF-8")
@@ -31,7 +31,9 @@ Analizirala bom nekaj najpogostejših bolezni(AIDS, tuberkuloza, malarija, koler
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-Uvozila sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij The world bank in World Health Organisation ter v obliki HTML z Wikipedije. Prilagam začetke uvoženih razpredelnic.
+Uvozila sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij The world bank in World Health Organisation ter v obliki HTML z Wikipedije.
+
+Prilagam začetke uvoženih razpredelnic:
 
 ```{r tabele, echo=FALSE, message=FALSE}
 kable(head(bolezni))
@@ -44,8 +46,18 @@ kable(head(tabela))
 
 # Analiza in vizualizacija podatkov
 
-```{r vizualizacija, echo=FALSE, message=FALSE}
-source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
+Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008.
+
+```{r alkohol, echo=FALSE, message=FALSE}
+alko <- filter(znacilnosti, znacilnosti$znacilnost == "alkohol") %>% group_by(leto) %>% summarise(povprecje = mean(pojavnost)) 
+alko <- alko[order(alko$leto), ]
+ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + theme_bw() + labs(y="globalna poraba alkohola(15+) [liter čistega alkohola]")
+```
+
+Spodnji graf prikazuje delež kadilcev med osebami, starimi vsaj 15 let, ločeno po spolu v letih 2000, 2005, 2010, 2012 in 2015. Presenetilo me je, da je delež kadilcev med moškimi(36.3%) veliko večji kot med ženskami(13.6%). (Slednja procenta sta izračunana kot povprečna deleža med letoma 2000 in 2015.)
+
+```{r tobak, echo=FALSE, message=FALSE}
+ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="pojavnost kajenja(15+) [%]")
 ```
 
 ***

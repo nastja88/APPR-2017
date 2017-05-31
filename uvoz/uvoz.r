@@ -50,15 +50,15 @@ worldbank$drzava[worldbank$drzava == "United States"] <- "United States of Ameri
 worldbank$drzava[worldbank$drzava == "Venezuela, RB"] <- "Venezuela"
 worldbank$drzava[worldbank$drzava == "Yemen, Rep."] <- "Yemen"
 
+# samo bolezni(iz worldbank-a)
 bol <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
   rename(bolezen = serija)
+
+# samo znacilnosti(iz worldbank-a)
 znac <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija") %>% 
   rename(znacilnost = serija)
 
-# worldbank$drzava <- as.factor(worldbank$drzava)
-
 # Pojavnost tuberkuloze
-
 tuberkuloza <- read_csv("podatki/who-tuberculosis.csv", skip=1,
                         col_names = c("drzava", "leto", "pojavnost"),
                         locale = locale(encoding = "UTF-8"))
@@ -95,6 +95,7 @@ alkohol <- filter(alkohol,  !is.na(pojavnost))
 alkohol$pojavnost %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
 alkohol$bolezen <- "alkohol"
 
+# povezane tabele iz who-ja
 who <- rbind(tuberkuloza, sifilis, kolera, alkohol)
 
 who$drzava[who$drzava == "Bahamas"] <- "The Bahamas"
@@ -122,7 +123,10 @@ who$drzava[who$drzava == "United Kingdom of Great Britain and Northern Ireland"]
 who$drzava[who$drzava == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
 who$drzava[who$drzava == "Viet Nam"] <- "Vietnam"
 
+# samo bolezni(iz who-ja)
 bole <- filter(who, who$bolezen != "alkohol")
+
+# alkohol(znacilnost) posebej
 alkohol <- filter(who, who$bolezen == "alkohol") %>% rename(znacilnost = bolezen)
 
 # Razširjenost kajenja tobačnih izdelkov 15+
@@ -150,9 +154,7 @@ tobak$drzava[tobak$drzava == "Serbia"] <- "Republic of Serbia"
 tobak$drzava[tobak$drzava == "United Kingdom of Great Britain and Northern Ireland"] <- "United Kingdom"
 tobak$drzava[tobak$drzava == "Viet Nam"] <- "Vietnam"
 
-# world <- unique(worldbank$drzava) %>% sort()
-# tuber <- unique(tuberkuloza$drzava) %>% sort()
-# razlicni <- world != tuber
+tobak$drzava <- as.factor(tobak$drzava)
 
 # Število plačanih prostih dni
 link <- "https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country"
@@ -166,10 +168,16 @@ tabela$drzava[tabela$drzava == "Serbia"] <- "Republic of Serbia"
 tabela$drzava[tabela$drzava == "Tanzania"] <- "United Republic of Tanzania"
 tabela$drzava[tabela$drzava == "United States"] <- "United States of America"
 
-bolezni <- rbind(bol, bole)
-bolezni$drzava %>% as.factor()
+tabela$drzava <- as.factor(tabela$drzava)
 
+# Vse bolezni skupaj
+bolezni <- rbind(bol, bole)
+bolezni$drzava <- as.factor(bolezni$drzava)
+bolezni$bolezen <- factor(bolezni$bolezen)
+
+# Znacilnosti skupaj
 znacilnosti <- rbind(znac, alkohol)
-znacilnosti$drzava %>% as.factor()
+znacilnosti$drzava <- as.factor(znacilnosti$drzava)
+znacilnosti$znacilnost <- factor(znacilnosti$znacilnost)
 
 rm(bol, bole, kolera, sifilis, tuberkuloza, alkohol, worldbank, znac, who)

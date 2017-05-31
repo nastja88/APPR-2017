@@ -55,7 +55,6 @@ svet <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthd
 # osnovni zemljevid sveta
 # ggplot() + geom_polygon(data = svet, aes(x = long, y = lat, group = group)) + theme_void()
 
-# Kako dodam drzave za katere ni podatka?
 ggplot() + geom_polygon(data = left_join(svet, filter(znacilnosti, znacilnosti$znacilnost == "alkohol" & znacilnosti$leto == 2010), by=c("sovereignt" = "drzava")), 
                         aes(x = long, y = lat, group = group, fill=pojavnost)) + theme_void() + ggtitle("Poraba alkohola(15+) v letu 2010 [liter čistega alkohola]") + theme(plot.title = element_text(hjust = 0.5))
 ggplot() + geom_polygon(data = left_join(svet, filter(tobak, tobak$leto == 2010 & tobak$spol == "moski"), by=c("sovereignt" = "drzava")), 
@@ -65,7 +64,9 @@ ggplot() + geom_polygon(data = left_join(svet, filter(tobak, tobak$leto == 2010 
 ggplot() + geom_polygon(data = left_join(svet, tabela, by=c("sovereignt" = "drzava")), 
                         aes(x = long, y = lat, group = group, fill=dopust)) + theme_void() + ggtitle("Število plačnih prostih dni(5 delovnih dni/teden)") + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="pojavnost kajenja(15+) [%]")
+ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="delež kadilcev(15+) [%]")
+tob <- tobak %>% group_by(spol) %>% summarise(mean(pojavnost))
+
 ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnost) + geom_boxplot() + theme_bw() + labs(y="število okuženih z malarijo")
 
 alko <- filter(znacilnosti, znacilnosti$znacilnost == "alkohol") %>% group_by(leto) %>% summarise(povprecje = mean(pojavnost)) 
