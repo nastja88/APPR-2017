@@ -12,13 +12,24 @@ Analizirala bom nekaj najpogostejših bolezni(AIDS, tuberkuloza, malarija, koler
 * http://apps.who.int/gho/data/node.home (CSV)
 * https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country (spletna stran)
 
-država | leto | bolezen | pojavnost
+bolezen | država | leto | pojavnost
 -------|------|---------|----------
-Afganistan|2000|AIDS|1900
+malarija | Afganistan | 2008 | 81574
 
-država | leto | značilnost | vrednost
+značilnost | država | leto | pojavnost
 -------|------|------------|---------
-Afganistan | 2004 | stopnja podhranjenosti | 32,9
+podhranjenost | Afganistan | 2004 | 32,9
+
+država | dopust
+-------|-------
+Afganistan | 35
+
+tobak:
+
+država | leto | spol | pojavnost
+-------|------|------|----------
+Albanija | 2015 | moški | 51,2
+
 ## Program
 
 Glavni program in poročilo se nahajata v datoteki `projekt.Rmd`. Ko ga prevedemo,
