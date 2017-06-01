@@ -4,7 +4,7 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2016/17
 
 ## Tematika
 
-Analizirala bom nekaj najpogostejših bolezni(AIDS, tuberkuloza, malarija, kolera, sifilis) po državah in letih (2000-2015) ter skušala ugotoviti razlog zanje (npr. podhranjenost, debelost, higijenske razmere, kvaliteta vode, onesnaženost, število plačanih prostih dni...). Moj cilj je ugotoviti, kako poskrbeti za to, da bi imeli kar najbolj zdravo populacijo.
+Analizirala bom nekaj najpogostejših bolezni(AIDS, tuberkuloza, malarija, kolera, sifilis) po državah in letih (2000-2015) ter skušala ugotoviti razlog zanje (npr. podhranjenost, prekomerna teža, dostopnost pitne vode, poraba alkohola in tobačnih izdelkov, število plačanih prostih dni, zdravstvena potrošnja). Moj cilj je ugotoviti, kako poskrbeti za to, da bi imeli kar najbolj zdravo populacijo.
 
 ### Viri:
 
