@@ -21,7 +21,7 @@ source("lib/libraries.r", encoding = "UTF-8")
 
 # Izbira teme
 
-Analizirala bom nekaj najpogostejših bolezni (AIDS, tuberkuloza, malarija, kolera, sifilis) po državah in letih (2000-2015) ter skušala ugotoviti razlog zanje (npr. podhranjenost, debelost, higijenske razmere, kvaliteta vode, onesnaženost, število plačanih prostih dni...). Moj cilj je ugotoviti, kako poskrbeti za to, da bi imeli kar najbolj zdravo populacijo.
+Analizirala bom nekaj najpogostejših bolezni(AIDS, tuberkuloza, malarija, kolera, sifilis) po državah in letih (2000-2015) ter skušala ugotoviti razlog zanje (npr. podhranjenost, prekomerna teža, dostopnost pitne vode, poraba alkohola in tobačnih izdelkov, število plačanih prostih dni, zdravstvena potrošnja). Moj cilj je ugotoviti, kako poskrbeti za to, da bi imeli kar najbolj zdravo populacijo.
 
 ***
 
@@ -57,7 +57,7 @@ Tabela **tobak** je sestavljena iz stolpcev drzava, leto, spol in pojavnost (mer
 kable(head(tobak))
 ```
 
-Tabelo **tabela** gradita stolpca drzava in dopust (meritev), v katerem je shranjeno minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku kot ga določa zakon. Velja še omeniti, da ponekod to število določijo delodajalci, in se praznik, ki pride na soboto ali nedeljo, v ZDA in UK premakne kot plačan dela prost dan na najbližji ponedeljek oz. petek. 
+Tabelo **tabela** gradita stolpca drzava in dopust (meritev), v katerem je shranjeno minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku kot ga določa zakon. Velja še omeniti, da ponekod to število določijo delodajalci, in da se praznik, ki pride na soboto ali nedeljo, v ZDA in UK premakne kot plačan dela prost dan na najbližji ponedeljek oz. petek. 
 
 ```{r tabela, echo=FALSE, message=FALSE}
 kable(head(tabela))
