@@ -103,5 +103,38 @@ ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnos
 
 # Napredna analiza podatkov
 
+```{r zemljevida, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+n <- 2000
+alk <- filter(znacilnosti, leto == n, znacilnost == "alkohol") %>% rename(alkohol = pojavnost)
+alk$znacilnost <- NULL
+alk$leto <- NULL
+den <- filter(znacilnosti, leto == n, znacilnost == "denar") %>% rename(denar = pojavnost)
+den$znacilnost <- NULL
+den$leto <- NULL
+vod <- filter(znacilnosti, leto == n, znacilnost == "voda") %>% rename(voda = pojavnost)
+vod$znacilnost <- NULL
+vod$leto <- NULL
+tub <- filter(bolezni, leto == n, bolezen == "tuberkuloza") %>% 
+  rename(tuberkuloza = pojavnost)
+tub$bolezen <- NULL
+tub$leto <- NULL
+
+zna <- full_join(alk, den) %>% full_join(vod) 
+zna <- na.omit(zna)
+zna1<- zna
+row.names(zna) <- zna$drzava
+zna$drzava <- NULL
+
+sk <- scale(zna) %>% kmeans(5, nstart = 1000)
+skupine <- data.frame(drzava = zna1$drzava, skupina = factor(sk$cluster))
+ggplot() + geom_polygon(data = svet %>% left_join(skupine, by = c("sovereignt" = "drzava")),
+                        aes(x = long, y = lat, group = group, fill = skupina)) + 
+                          theme_void() + ggtitle("Države po podobnih značilnostih") +      theme(plot.title = element_text(hjust = 0.5))
+
+ggplot() + geom_polygon(data = svet %>% left_join(tub, by = c("sovereignt" = "drzava")),
+                        aes(x = long, y = lat, group = group, fill = tuberkuloza)) + theme_void() + ggtitle("Razširjenost tuberkuloze") + theme(plot.title = element_text(hjust = 0.5))
+```
+
+
 ***
 
