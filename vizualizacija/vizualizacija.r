@@ -64,13 +64,21 @@ ggplot() + geom_polygon(data = left_join(svet, filter(tobak, tobak$leto == 2010 
 ggplot() + geom_polygon(data = left_join(svet, tabela, by=c("sovereignt" = "drzava")), 
                         aes(x = long, y = lat, group = group, fill=dopust)) + theme_void() + ggtitle("Število plačnih prostih dni(5 delovnih dni/teden)") + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + labs(y="delež kadilcev(15+) [%]")
+ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + theme_bw() + 
+  labs(y="delež kadilcev (15+) [%]")
 tob <- tobak %>% group_by(spol) %>% summarise(mean(pojavnost))
 
 ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnost) + geom_boxplot() + theme_bw() + labs(y="število okuženih z malarijo")
 
-alko <- filter(znacilnosti, znacilnosti$znacilnost == "alkohol") %>% group_by(leto) %>% summarise(povprecje = mean(pojavnost)) 
+alko <- filter(znacilnosti, znacilnosti$znacilnost == "alkohol") %>% group_by(leto) %>% 
+  summarise(povprecje = mean(pojavnost)) 
 alko <- alko[order(alko$leto), ]
-ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + theme_bw() + labs(y="globalna poraba alkohola(15+) [liter čistega alkohola]")
+alko$leto <- as.numeric(levels(alko$leto))[alko$leto]
+ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + 
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2)) + theme_bw() + 
+  labs(y="globalna poraba alkohola (15+) [liter čistega alkohola]")
+
+kv <- lm(data = alko, povprecje ~ leto + I(leto^2))
+predict(kv, data.frame(leto=seq(2015, 2025, 1)))
 
 rm(alko)

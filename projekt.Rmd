@@ -71,10 +71,13 @@ kable(head(tabela), align="cccc")
 
 Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola, od leta 2000 do 2015. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008.
 
+Dodana je tudi kvadratna aproksimacija gibanja porabe alkohola.
+
 ```{r alkohol, fig.align='center', echo=FALSE, message=FALSE}
 alko <- filter(znacilnosti, znacilnosti$znacilnost == "alkohol") %>% group_by(leto) %>% summarise(povprecje = mean(pojavnost)) 
 alko <- alko[order(alko$leto), ]
-ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + theme_bw() + labs(y="globalna poraba alkohola (15+) [liter čistega alkohola]")
+alko$leto <- as.numeric(levels(alko$leto))[alko$leto]
+ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + geom_smooth(method = "lm", formula = y ~ x + I(x^2)) + theme_bw() + labs(y="globalna poraba alkohola (15+) [liter čistega alkohola]")
 ```
 
 Spodnji graf prikazuje delež kadilcev med osebami, starimi vsaj 15 let, ločeno po spolu v letih 2000, 2005, 2010, 2012 in 2015. Presenetilo me je, da je delež kadilcev med moškimi (36.3%) veliko večji kot med ženskami (13.6%). (Slednja procenta sta izračunana kot povprečna deleža med letoma 2000 in 2015.)
@@ -89,7 +92,7 @@ Zemljevid prikazuje število plačanih prostih dni na leto pri 5-dnevnem delovni
 svet <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip",
                        "ne_110m_admin_0_countries") %>% pretvori.zemljevid()
 ggplot() + geom_polygon(data = left_join(svet, tabela, by=c("sovereignt" = "drzava")), 
-                        aes(x = long, y = lat, group = group, fill=dopust)) + theme_void() + ggtitle("Število plačanih prostih dni (5 delovnih dni/teden)") + theme(plot.title = element_text(hjust = 0.5))
+                        aes(x = long, y = lat, group = group, fill=dopust)) + theme_void() + ggtitle("Število plačanih prostih dni (5 delovnih dni/teden)") + theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title=NULL))
 ```
 
 
@@ -129,10 +132,30 @@ sk <- scale(zna) %>% kmeans(5, nstart = 1000)
 skupine <- data.frame(drzava = zna1$drzava, skupina = factor(sk$cluster))
 ggplot() + geom_polygon(data = svet %>% left_join(skupine, by = c("sovereignt" = "drzava")),
                         aes(x = long, y = lat, group = group, fill = skupina)) + 
-                          theme_void() + ggtitle("Države po podobnih značilnostih") +      theme(plot.title = element_text(hjust = 0.5))
+                          theme_void() + ggtitle("Države po podobnih značilnostih v letu 2000") +      theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title=NULL))
+
+zenske <- filter(tobak, leto == n, spol == "zenske") %>% rename(zenske = pojavnost)
+zenske$spol <- NULL
+zenske$leto <- NULL
+moski <- filter(tobak, leto == n, spol == "moski") %>% rename(moski = pojavnost)
+moski$spol <- NULL
+moski$leto <- NULL
+
+to <- full_join(zenske, moski)
+to <- na.omit(to)
+to1 <- to
+row.names(to) <- to$drzava
+to$drzava <- NULL
+
+sk0 <- scale(to) %>% kmeans(5, nstart = 1000)
+skupine0 <- data.frame(drzava = to1$drzava, skupina0 = factor(sk0$cluster))
+ggplot() + geom_polygon(data = svet %>% left_join(skupine0, by = c("sovereignt" = "drzava")),
+                        aes(x = long, y = lat, group = group, fill = skupina0)) + 
+  theme_void() + ggtitle("Države po podobni razširjenosti uporabe tobačnih izdelkov v letu 2000") + 
+  theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title=NULL))
 
 ggplot() + geom_polygon(data = svet %>% left_join(tub, by = c("sovereignt" = "drzava")),
-                        aes(x = long, y = lat, group = group, fill = tuberkuloza)) + theme_void() + ggtitle("Razširjenost tuberkuloze") + theme(plot.title = element_text(hjust = 0.5))
+                        aes(x = long, y = lat, group = group, fill = tuberkuloza)) + theme_void() + ggtitle("Razširjenost tuberkuloze v letu 2000") + theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title=NULL))
 ```
 
 
