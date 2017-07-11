@@ -16,6 +16,7 @@ worldbank <- read_csv("podatki/worldbank.csv", skip=1,
 worldbank$kodadrzave <- NULL
 worldbank$kodaserije <- NULL
 worldbank <- melt(worldbank, id.vars=c("serija", "drzava"), variable.name="leto", value.name="pojavnost")
+worldbank$leto <- parse_number(worldbank$leto)
 worldbank <- filter(worldbank,  !is.na(pojavnost))
 worldbank$serija <- as.factor(worldbank$serija)
 levels(worldbank$serija) <- list(voda="Improved water source (% of population with access)", 
@@ -91,6 +92,7 @@ alkohol <- read_csv("podatki/who-alcohol.csv", skip=2,
 alkohol$vir <- NULL
 alkohol$tippijace <- NULL
 alkohol <- melt(alkohol, id.vars=c("drzava"), variable.name="leto", value.name="pojavnost")
+alkohol$leto <- parse_number(alkohol$leto)
 alkohol <- filter(alkohol,  !is.na(pojavnost))
 alkohol$pojavnost %>% parse_number(locale=locale(decimal_mark=".", grouping_mark=" "))
 alkohol$bolezen <- "alkohol"
