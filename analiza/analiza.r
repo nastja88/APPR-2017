@@ -20,7 +20,7 @@ zna$drzava <- NULL
 
 sk <- scale(zna) %>% kmeans(5, nstart = 1000)
 skupine <- data.frame(drzava = zna1$drzava, skupina = factor(sk$cluster))
-ggplot() + geom_polygon(data = svet %>% left_join(skupine, by = c("sovereignt" = "drzava")),
+g_zna <- ggplot() + geom_polygon(data = svet %>% left_join(skupine, by = c("sovereignt" = "drzava")),
                         aes(x = long, y = lat, group = group, color = "black", fill = skupina)) + 
   theme_void() + ggtitle("Države po podobnih značilnostih") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
@@ -41,7 +41,7 @@ to$drzava <- NULL
 
 sk0 <- scale(to) %>% kmeans(5, nstart = 1000)
 skupine0 <- data.frame(drzava = to1$drzava, skupina0 = factor(sk0$cluster))
-ggplot() + geom_polygon(data = svet %>% left_join(skupine0, by = c("sovereignt" = "drzava")),
+g_tob <- ggplot() + geom_polygon(data = svet %>% left_join(skupine0, by = c("sovereignt" = "drzava")),
                         aes(x = long, y = lat, group = group, color = "black", 
                             fill = skupina0)) + 
   theme_void() + ggtitle("Države po podobni razširjenosti uporabe tobačnih izdelkov") + 
@@ -61,7 +61,7 @@ tub$bolezen <- NULL
 tub$leto <- NULL
 
 # zemljevid razširjenosti tuberkuloze
-ggplot() + geom_polygon(data = svet %>% left_join(tub, by = c("sovereignt" = "drzava")),
+g_tub <- ggplot() + geom_polygon(data = svet %>% left_join(tub, by = c("sovereignt" = "drzava")),
                         aes(x = long, y = lat, group = group, color = "black", 
                             fill = pojavnost)) + 
   theme_void() + ggtitle("Razširjenost tuberkuloze") + 
@@ -71,7 +71,7 @@ ggplot() + geom_polygon(data = svet %>% left_join(tub, by = c("sovereignt" = "dr
                        values = rescale(c(0, 50, 200, 700)))
 
 # zemljevid razširjenosti okuženih z virusom hiv
-ggplot() + geom_polygon(data = svet %>% left_join(hi, by = c("sovereignt" = "drzava")),
+g_hiv <- ggplot() + geom_polygon(data = svet %>% left_join(hi, by = c("sovereignt" = "drzava")),
                         aes(x = long, y = lat, group = group, color = "black", 
                             fill = pojavnost)) + 
   theme_void() + ggtitle("Razširjenost okuženih z virusom hiv") + 
@@ -81,7 +81,7 @@ ggplot() + geom_polygon(data = svet %>% left_join(hi, by = c("sovereignt" = "drz
                        values = rescale(c(0, 50, 200, 700)))
 
 # zemljevid razširjenosti malarije
-ggplot() + geom_polygon(data = svet %>% left_join(mal, by = c("sovereignt" = "drzava")),
+g_mal <- ggplot() + geom_polygon(data = svet %>% left_join(mal, by = c("sovereignt" = "drzava")),
                         aes(x = long, y = lat, group = group, color = "black", 
                             fill = pojavnost)) + 
   theme_void() + ggtitle("Razširjenost malarije") + 
@@ -97,7 +97,7 @@ mala <- filter(bolezni, bolezen == "malarija") %>%
   filter(drzava == "Ghana" | drzava == "India" | drzava == "Mozambique" | drzava == "Uganda" | 
               drzava == "United Republic of Tanzania")
 mala$bolezen <- NULL
-ggplot(mala) + aes(x = leto, y = pojavnost / 1000000, group = drzava, 
+g_mal <- ggplot(mala) + aes(x = leto, y = pojavnost / 1000000, group = drzava, 
                    color = slovar[parse_character(drzava)]) + geom_point() + 
   geom_line() + theme_bw() + labs(y = "število obolelih za malarijo (v milijonih)") + 
   guides(color = guide_legend(title = "Država"))
