@@ -71,13 +71,15 @@ kable(head(tabela), align="cccc")
 
 # Analiza in vizualizacija podatkov
 
-Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola, od leta 2000 do 2015. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008.
+Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola, od leta 2000 do 2015. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008. Lahko pa bi bil tudi posledica spremembe zakonodaje ali načina meritve (npr. v Rusiji šele od leta 2011 pijače z manj kot 10% alkohola štejejo med alkoholne pijače[^1]), o čemer pa nisem našla veliko podatkov.
 
 Dodana je tudi kvadratna aproksimacija gibanja porabe alkohola.
 
 ```{r alkohol, fig.align='center', echo=FALSE, message=FALSE}
 g_alk1
 ```
+
+[^1]: <http://www.bbc.com/news/world-europe-14232970>
 
 Spodnji graf prikazuje delež kadilcev med osebami, starimi vsaj 15 let, ločeno po spolu v letih 2000, 2005, 2010, 2012 in 2015. Presenetilo me je, da je delež kadilcev med moškimi (36.3%) veliko večji kot med ženskami (13.6%). (Slednja procenta sta izračunana kot povprečna deleža med letoma 2000 in 2015.)
 
