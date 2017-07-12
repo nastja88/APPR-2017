@@ -7,6 +7,12 @@ library(ggplot2)
 library(reshape2)
 library(shiny)
 library(tidyr)
+library(scales)
+library(lazyeval)
+library(sp)
+library(maptools)
+library(digest)
+library(DT)
 
 # Uvozimo funkcije za pobiranje in uvoz zemljevida.
 source("lib/uvozi.zemljevid.r", encoding = "UTF-8")

@@ -2,16 +2,17 @@ library(shiny)
 
 shinyUI(fluidPage(
   
-  titlePanel("Slovenske občine"),
+  titlePanel("Najpogostejše bolezni"),
   
-  tabsetPanel(
-      tabPanel("Velikost družine",
-               DT::dataTableOutput("druzine")),
-      
-      tabPanel("Število naselij",
-               sidebarPanel(
-                  uiOutput("pokrajine")
-                ),
-               mainPanel(plotOutput("naselja")))
-    )
+  sidebarLayout(
+    sidebarPanel(("Izberi željene podatke:"), 
+                 selectInput("bolezen", "Bolezen:", 
+                             choices = c("AIDS", "kolera", "malarija", "sifilis", "tuberkuloza"),
+                             multiple = FALSE),
+                 selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE),
+                 actionButton("do", "Potrdi")
+                 ),
+    
+    mainPanel(plotOutput("zemljevid")))
+  
 ))
