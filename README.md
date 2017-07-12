@@ -45,7 +45,7 @@ shranijo v mapo `../zemljevidi/` (torej izven mape projekta).
 
 ## Potrebni paketi za R
 
-Za zagon tega vzorca je potrebno namestiti sledeče pakete za R:
+Za zagon programa je potrebno namestiti sledeče pakete za R:
 
 * `knitr` - za izdelovanje poročila
 * `rmarkdown` - za prevajanje poročila v obliki RMarkdown
@@ -57,7 +57,10 @@ Za zagon tega vzorca je potrebno namestiti sledeče pakete za R:
 * `readr` - za branje podatkov
 * `rvest` - za pobiranje spletnih strani
 * `reshape2` - za preoblikovanje podatkov v obliko *tidy data*
+* `tidyr` - za preoblikovanje podatkov v obliko *tidy data*
 * `dplyr` - za delo s podatki
 * `gsubfn` - za delo z nizi (čiščenje podatkov)
 * `ggplot2` - za izrisovanje grafov
 * `extrafont` - za pravilen prikaz šumnikov (neobvezno)
+* `scales` - za vizualizacijo podatkov
+* `lazyeval` - za nekatere izračune
