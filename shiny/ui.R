@@ -11,7 +11,7 @@ shinyUI(fluidPage(
              sidebarLayout(
                
                sidebarPanel(("Izberi željene podatke:"), 
-                 selectInput("bolezen", "Bolezen:", 
+                 selectInput("bolezni", "Bolezen:", 
                              choices = c("AIDS", "kolera", "malarija", "sifilis", "tuberkuloza"),
                              multiple = FALSE),
                  selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE)
@@ -28,14 +28,17 @@ shinyUI(fluidPage(
              sidebarLayout(
                
                sidebarPanel(("Izberi željene podatke."),
-                            selectInput("znacilnost", "Značilnost:",
+                            selectInput("znacilnosti", "Značilnost:",
                                         choices = c("dostopnost pitne vode", 
                                                     "zdravstvena potrošnja na prebivalca",
-                                                    "stopnja podhranjenosti (5-)",
-                                                    "stopnja debelosti (5-)",
-                                                    "količina porabljenega alkohola na osebo (15+)"),
+                                                    "število plačanih prostih dni",
+                                                    "stopnja podhranjenosti",
+                                                    "stopnja debelosti",
+                                                    "količina porabljenega alkohola na osebo",
+                                                    "stopnja kadilcev",
+                                                    "stopnja kadilk"),
                                         multiple = FALSE),
-                            selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE)
+                            selectInput("leto1", "Leto:", choices = 2000:2015, multiple = FALSE)
                             ),
                
                mainPanel(plotOutput("znacilnosti")))
