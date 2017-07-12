@@ -2,7 +2,7 @@ library(shiny)
 
 shinyUI(fluidPage(
   
-  titlePanel("Najpogostejše bolezni"),
+  titlePanel("Razširjenost nekaterih bolezni"),
   
   sidebarLayout(
     sidebarPanel(("Izberi željene podatke:"), 

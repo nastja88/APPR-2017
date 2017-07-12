@@ -59,8 +59,9 @@ g_tb <- ggplot(tobak) + aes(x=leto, y=pojavnost, color=spol) + geom_jitter() + t
 #tob <- tobak %>% group_by(spol) %>% summarise(mean(pojavnost))
 
 # število okuženih z malarijo po državah
-g_mal1 <- ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + aes(x=leto, y=pojavnost) + 
-  geom_boxplot() + theme_bw() + labs(y="število okuženih z malarijo")
+g_mal1 <- ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + 
+  aes(x = leto, y = pojavnost/1000000, group = leto) + 
+  geom_boxplot() + theme_bw() + labs(y="število okuženih z malarijo (v milijonih)")
 
 # globalna poraba alkohola (15+)
 alko <- filter(znacilnosti, znacilnosti$znacilnost == "alkohol") %>% group_by(leto) %>% 
