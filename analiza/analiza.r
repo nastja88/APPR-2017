@@ -49,6 +49,13 @@ g_tob <- ggplot() + geom_polygon(data = svet %>% left_join(skupine0, by = c("sov
   guides(fill=guide_legend(title=NULL), color="none")
 
 
+kv <- lm(data = alko, povprecje ~ leto + I(leto^2)) %>% 
+  predict(data.frame(leto=seq(2016, 2025, 1))) 
+kv <- data_frame(kv) %>% rename(predikcija = kv)
+kv$leto <- 2016:2025
+kv <- kv[c(2,1)]
+
+
 rm(alk, den, vod, zenske, moski)
 
 
