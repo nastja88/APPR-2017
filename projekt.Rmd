@@ -33,11 +33,11 @@ source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 source("analiza/analiza.r", encoding = "UTF-8")
 ```
 
-Uvozila sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij *The world bank* in *World Health Organisation* ter v obliki HTML z *Wikipedije*.
+Uvozila sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spletnih strani organizacij *The world bank*[^1] in *World Health Organisation*[^2] ter v obliki HTML z *Wikipedije*[^3].
 
 ### Začetki razpredelnic:
 
-Tabela **bolezni** je sestavljena iz stolpcev *bolezen*, *drzava*, *leto* in *pojavnost* (meritev). 
+Tabela **bolezni** je sestavljena iz stolpcev *bolezen* (factor), *drzava*(factor), *leto*(numeric) in *pojavnost* (numeric, meritev). 
 
 Spremenljivka *hiv* v stolpcu *bolezen* predstavlja delež okuženih z virusom hiv  na leto med osebami, ki so stare od 15 do 49 let. Spremenljivka *sifilis* predstavlja delež živorojenih otrok na leto, okuženih s prirojenim sifilisom, podobno *tuberkuloza* delež okuženih s tuberkulozo na leto. Spremenljivki *malarija* in *kolera* označujeta število potrjenih primerov malarije oz. kolere na leto. Podatki so zbrani za leta 2000-2015.
 
@@ -45,7 +45,7 @@ Spremenljivka *hiv* v stolpcu *bolezen* predstavlja delež okuženih z virusom h
 kable(head(bolezni), align="cccc")
 ```
 
-Tabelo **znacilnosti** sestavljajo stolpci *znacilnost*, *drzava*, *leto* in *pojavnost* (meritev). 
+Tabelo **znacilnosti** sestavljajo stolpci *znacilnost*(factor), *drzava*(factor), *leto*(numeric) in *pojavnost* (numeric, meritev). 
 
 Spremenljivka *voda* v stolpcu *znacilnost* predstavlja delež populacije z dostopom do izboljšanega pitnega vodnega vira (zasebna in javna vodovodna napeljava, javni hidranti, zavarovani vodnjaki in izviri, zbrana deževnica). Spremenljivka *denar* pomeni zdravstveno potrošnjo na prebivalca (preračunano na mednarodni dolar, 2011). Spremenljivka *podhranjenost* (*debelost*) prikazuje delež otrok, mlajših od pet let, s prenizko (previsoko) telesno težo. Spremenljivka *alkohol* prikazuje porabo alkohola med osebami, starejšimi od 15 let, v litrih čistega alkohola. Podatki so zbrani za leta 2000-2015.
 
@@ -53,13 +53,13 @@ Spremenljivka *voda* v stolpcu *znacilnost* predstavlja delež populacije z dost
 kable(head(znacilnosti), align="cccc")
 ```
 
-Tabela **tobak** je sestavljena iz stolpcev *drzava*, *leto*, *spol* in *pojavnost* (meritev), pri čemer spremenljivka *pojavnost* meri delež oseb starejših od 15 let, ki kadijo katerikoli tobačni izdelek. Našla sem podatke za leta 2000, 2005, 2010, 2012 in 2015.
+Tabela **tobak** je sestavljena iz stolpcev *drzava*(factor), *leto*(numeric), *spol*(factor) in *pojavnost* (numeric, meritev), pri čemer spremenljivka *pojavnost* meri delež oseb starejših od 15 let, ki kadijo katerikoli tobačni izdelek. Našla sem podatke za leta 2000, 2005, 2010, 2012 in 2015.
 
 ```{r tobak0, echo=FALSE, message=FALSE}
 kable(head(tobak), align="cccc")
 ```
 
-Tabelo **tabela** gradita stolpca *drzava* in *dopust* (meritev), v katerem je shranjeno minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku kot ga določa zakon. 
+Tabelo **tabela** gradita stolpca *drzava*(factor) in *dopust* (numeric, meritev), v katerem je shranjeno minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku kot ga določa zakon. 
 
 Velja še omeniti, da ponekod to število določijo delodajalci, in da se praznik, ki pride na soboto ali nedeljo, v ZDA in UK premakne kot plačan dela prost dan na najbližji ponedeljek oz. petek. 
 
@@ -71,7 +71,6 @@ kable(head(tabela), align="cccc")
 
 # Analiza in vizualizacija podatkov
 
-## Malarija
 
 Na naslednjem grafu je prikazano število okuženih z malarijo v letih od 2000 do 2015, dodani so tudi kvartili porazdelitve. Opazen je velik trend naraščanja.
 
@@ -80,9 +79,7 @@ g_mal1
 ```
 
 
-## Značilnosti
-
-Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola, od leta 2000 do 2015. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008. Lahko pa bi bil tudi posledica spremembe zakonodaje ali načina meritve (npr. v Rusiji šele od leta 2011 pijače z manj kot 10% alkohola štejejo med alkoholne pijače[^1]), o čemer pa žal nisem našla ustreznih podatkov.
+Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola, od leta 2000 do 2015. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008. Lahko pa bi bil tudi posledica spremembe zakonodaje ali načina meritve (npr. v Rusiji šele od leta 2011 pijače z manj kot 10% alkohola štejejo med alkoholne pijače[^4]), o čemer pa žal nisem našla ustreznih podatkov.
 
 Dodana je tudi kvadratna aproksimacija gibanja porabe alkohola, sledi pa še tabela, v kateri sem s pomočjo linearne regresije skušala napovedati porabo alkohola za naslednjih 10 let.
 
@@ -103,10 +100,17 @@ g_tb
 
 # Napredna analiza podatkov
 
-```{r zemljevida, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
-g_zna
-g_tob
+Sprva sem hotela razvrstiti države glede na vse značilnosti, vendar sem ugotovila, da ima število plačanih prostih dni zelo majhen (če sploh kakšen) vpliv na razširjenost izbranih bolezni. (Če bi si izbrala kakšno drugo bolezen (npr. depresijo), bi bil rezultat gotovo drugačen.) Izkazalo se je tudi, da ni smiselno vključevati stopnje podhranjenosti in debelosti, saj je dostopnih malo podatkov, posledično pa bi razvrščanje lahko izvajala nad majhnim številom držav. S podobnim razlogom sem se odločila, da izpustim tudi vpliv uporabe tobačnih izdelkov. 
+
+Če sem dodala zraven še vpliv uživanja alkohola, so bile muslimanske države[^5] (severni del Afrike, Jugozahodna, deloma Jugovzhodna, Južna in Srednja Azija[^6]) razporejene v isto skupino, saj je tam poraba izredno majhna, ker Koran prepoveduje uživanje alkohola. V isto skupino je bila vključena tudi Indija, kjer je ponekod alkohol popolnoma prepovedan[^7], vendar je v splošenem poraba nekoliko večja kot v muslimanskih državah. Po drugi strani pa je razširjenost bolezni v teh državah zelo različna - v severnem delu Afrike in Jugozahodni Aziji je obolevnost zelo nizka v primerjavi z Indijo in Jugovzhodno Azijo.
+
+Tako sem države razvrstila v pet skupin zgolj na podlagi dostopnosti pitne vode in denarnih sredstev za zdravstveno oskrbo, kar prikazuje spodnji zemljevid. Opazimo, da sta glede bolezni (glej interaktivni del poročila) najbolj kritični dve skupini, ki se deloma ujemata s skupinami na zemljevidu: prva predstavlja južni del Afrike, druga pa Južno in Jugovzhodno Azijo. V teh dveh skupinah sta dostop do pitne vode in denarna podprtost zdravstvenega sektorja zelo slaba (v prej omenjenem azijskem delu nekoliko boljša, zato je tudi pogostost bolezni manjša).
+
+```{r razvrscanje, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+g_zna0
 ```
+
+Tako sem potrdila pričakovan rezultat: dostopnost do izboljšanega pitnega vodnega vira in količina sredstev namenjenih za zdravstveno porabo sta v močni negativni korelaciji z razširjenostjo proučevanih bolezni. 
 
 ```{r shiny, echo=FALSE, message=FALSE}
 shinyAppDir("shiny", options = list(width = "100%", height = 500))
@@ -114,4 +118,11 @@ shinyAppDir("shiny", options = list(width = "100%", height = 500))
 
 
 ***
-[^1]: <http://www.bbc.com/news/world-europe-14232970>, 12. 7. 2017.
+
+[^1]: <http://databank.worldbank.org/data/reports.aspx?source=health-nutrition-and-population-statistics#>
+[^2]: <http://apps.who.int/gho/data/node.home>
+[^3]: <https://en.wikipedia.org/wiki/List_of_minimum_annual_leave_by_country>
+[^4]: <http://www.bbc.com/news/world-europe-14232970>
+[^5]: <https://sl.wikipedia.org/wiki/Islam>
+[^6]: <https://sl.wikipedia.org/wiki/Azija>
+[^7]: <http://www.jasnazaler.si/node/161>
