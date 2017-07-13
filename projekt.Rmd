@@ -86,9 +86,6 @@ g_mal1
 
 Spodnji graf prikazuje gibanje števila okuženih z malarijo v letih od 2000 do 2015 v izbranih petih državah. V Afriki le to narašča, razen v Tanzaniji pada, z nekaj vmesnimi skoki naraščanja. Drugače pa je v Indiji, kjer je bilo leta 2000 največ obolelih izmed vseh držav, za katere so znani podatki, od takrat naprej pa večinoma vsako leto zboli manj ljudi.   
 
-```{r malarija2, fig.align='center', echo=FALSE, message=FALSE}
-g_mal2
-```
 
 ## AIDS
 
@@ -115,10 +112,10 @@ Znaki in simptomi so trda in neboleča kožna razjeda, ki ne srbi; razpršen izp
 
 Tuberkuloza ali jetika (zastarelo tudi sušica) je pogosta in mnogokrat smrtna nalezljiva bolezen, ki jo povzročajo različni mikobakterijski sevi. Tuberkuloza običajno okuži pljuča, lahko pa tudi druge telesne dele. Širi se po zraku, ko ljudje z aktivno tuberkulozno okužbo kašljajo, kihajo ali kako drugače prenašajo izdihano tekočino skozi zrak. Klasični znaki aktivne okužbe s tuberkulozo so kronični kašelj, krvav izmeček, vročica, nočno potenje in hujšanje. 
 
-Ena tretjina svetovnega prebivalstva naj bi bila okuženas tuberkulozo, do novih okužb prihaja letno pri približno 1 % prebivalstva. Porazdelitev pa ni enakomerna, približno 80 % prebivalstva v številnih azijskih in afriških državah je pozitivnega na tuberkulinski test, v ZDA pa je pozitivnih samo 5‒10 % prebivalcev. V razvijajočem se svetu se s tuberkulozo zaradi zmanjšane odpornosti okuži vse več ljudi, predvsem zaradi visoke ravni okužbe s HIV-om in z njo povezanim razvojem AIDS-a.
+Ena tretjina svetovnega prebivalstva naj bi bila okuženas tuberkulozo, do novih okužb prihaja letno pri približno 1 % prebivalstva. Porazdelitev pa ni enakomerna, približno 80 % prebivalstva v številnih azijskih in afriških državah je pozitivnega na tuberkulinski test, v ZDA pa je pozitivnih samo 5‒10 % prebivalcev. V razvijajočem se svetu se s tuberkulozo zaradi zmanjšane odpornosti okuži vse več ljudi, predvsem zaradi visoke ravni okužbe s HIV-om in z njo povezanim razvojem AIDS-a.[^5]
 
 
-Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola, od leta 2000 do 2015. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008. Lahko pa bi bil tudi posledica spremembe zakonodaje ali načina meritve (npr. v Rusiji šele od leta 2011 pijače z manj kot 10% alkohola štejejo med alkoholne pijače[^5]), o čemer pa nisem našla veliko podatkov.
+Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let, izraženo v litrih čistega alkohola, od leta 2000 do 2015. Opazen je trend naraščanja, poleg tega pa tudi velik skok med letoma 2011 in 2012. Pripisujem ga gospodarski krizi leta 2012, je pa zanimivo, da ni večjega skoka v času gospodarske krize leta 2008. Lahko pa bi bil tudi posledica spremembe zakonodaje ali načina meritve (npr. v Rusiji šele od leta 2011 pijače z manj kot 10% alkohola štejejo med alkoholne pijače[^6]), o čemer pa nisem našla veliko podatkov.
 
 Dodana je tudi kvadratna aproksimacija gibanja porabe alkohola.
 
@@ -133,21 +130,14 @@ Spodnji graf prikazuje delež kadilcev med osebami, starimi vsaj 15 let, ločeno
 g_tb
 ```
 
-Zemljevid prikazuje število plačanih prostih dni na leto pri 5-dnevnem delovniku. Presenečena sem bila nad ugotovitvijo, da v ZDA zakon ne določa niti enega plačanega prostega dneva na leto. Poleg tega sem pričakovala, da je v Afriki to število precej manjše.
-
-```{r dopust, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
-g_dop
-```
-
 
 ***
 
 # Napredna analiza podatkov
 
-```{r zemljevidi, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+```{r zemljevida, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
 g_zna
 g_tob
-g_tub
 ```
 
 ```{r shiny, echo=FALSE, message=FALSE}
@@ -156,8 +146,9 @@ shinyAppDir("shiny", options = list(width = "100%", height = 500))
 
 
 ***
-[^1]: Povzeto po <https://sl.wikipedia.org/wiki/Malarija>.
-[^2]: Povzeto po <https://sl.wikipedia.org/wiki/Aids>.
-[^3]: Povzeto po <https://sl.wikipedia.org/wiki/Kolera>.
-[^4]: Povzeto po <https://sl.wikipedia.org/wiki/Sifilis>.
-[^5]: <http://www.bbc.com/news/world-europe-14232970>.
+[^1]: Povzeto po <https://sl.wikipedia.org/wiki/Malarija>, 12. 7. 2017.
+[^2]: Povzeto po <https://sl.wikipedia.org/wiki/Aids>, 12. 7. 2017.
+[^3]: Povzeto po <https://sl.wikipedia.org/wiki/Kolera>, 12. 7. 2017.
+[^4]: Povzeto po <https://sl.wikipedia.org/wiki/Sifilis>, 12. 7. 2017.
+[^5]: Povzeto po <https://sl.wikipedia.org/wiki/Tuberkuloza>, 12. 7. 2017.
+[^6]: <http://www.bbc.com/news/world-europe-14232970>, 12. 7. 2017.
