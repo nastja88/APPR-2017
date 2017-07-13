@@ -12,12 +12,12 @@ shinyUI(fluidPage(
                
                sidebarPanel(("Izberi željene podatke:"), 
                  selectInput("bolezen", "Bolezen:", 
-                             choices = c("AIDS", "kolera", "malarija", "sifilis", "tuberkuloza"),
+                             choices = c("AIDS", "kolera", "malarija", "prirojeni sifilis", "tuberkuloza"),
                              multiple = FALSE),
                  selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE)
                  ),
     
-    mainPanel(textOutput("opis"), plotOutput("bolezni")))
+    mainPanel(textOutput("opis"), plotOutput("graf"), plotOutput("bolezni")))
   
   )),
 

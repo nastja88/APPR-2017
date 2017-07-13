@@ -9,13 +9,61 @@ shinyServer(function(input, output){
       besedilo <- "Kolera je akutna nalezljiva epidemična črevesna bolezen, ki jo povzroča bakterija Vibrio cholerae. Glavna simptoma sta driska in bruhanje. Pojavi se lahko odpoved obtočil in šok.\n Okužba se primarno prenaša z onesnaženo pitno vodo in hrano, ki je bila v stiku z blatom okužene osebe. Hudost driske in bruhanja lahko vodi do hitre izsušitve in elektrolitskega neravnovesja in v nekaterih primerih tudi do smrti.\n Kolera verjetno izhaja iz indijske podceline, od pradavnih časov je prisotna v delti Gangesa. Po kopenskih in morskih trgovskih poti se je razširila v Rusijo leta 1817, nato pa po vsej Evropi. Iz Evrope se je razširila v Severno Ameriko. Leta 2010 se je okužilo od 3 do 5 milijonov ljudi, umrlo jih od 100.000 do 130.000."
     } else if (input$bolezen == "malarija") {
       besedilo <- "Malarija je nalezljiva bolezen, ki jo povzročajo nekatere vrste zajedavskih praživali iz razreda trosovcev, plazmodiji. Letno se pojavi približno 350-500 milijonov okužb in od 1-3 milijonov smrti, pretežno v tropih in podsaharski Afriki. Prenašalec malarije je komar mrzličar.\n Bolezenski znaki malarije so mrzlica, drgetanje, bolečine v sklepih, bljuvanje in krči, včasih pa tudi ščemenje kože. Pri težjih oblikah se lahko pojavi koma in, če bolezni ne zdravimo, končno smrt, posebej pri majhnih otrocih. Lahko se pojavijo tudi pozni zapleti, ki privedejo do poškodb osrednjega živčevja ali do odpovedi ledvic pri črnosečni mrzlici.\n Na naslednjem grafu je prikazano število okuženih z malarijo v letih od 2000 do 2015, dodani so tudi kvartili porazdelitve. Opazen je velik trend naraščanja."
-    } else if (input$bolezen == "sifilis") {
+    } else if (input$bolezen == "prirojeni sifilis") {
       besedilo <- "Sifilis je spolno prenosljiva okužba, ki jo povzroča bakterija spiroheta. Glavna pot prenosa je s spolnim stikom; lahko se tudi prenaša z matere na zarodek med nosečnostjo ali ob porodu, kar ima za posledico prirojeni sifilis.\n Znaki in simptomi so trda in neboleča kožna razjeda, ki ne srbi; razpršen izpuščaj, ki pogosto vključuje dlani in podplate; živčnimi in srčnimi simptomi. Sifilis je mogoče učinkovito zdraviti z antibiotiki. Za sifilisom se meni, da je v letu 1999 po vsem svetu zbolelo dodatno 12 milijonov ljudi, pri tem je več kot 90 % primerov bilo v državah v razvoju."
     } else {
       besedilo <- "Tuberkuloza ali jetika (zastarelo tudi sušica) je pogosta in mnogokrat smrtna nalezljiva bolezen, ki jo povzročajo različni mikobakterijski sevi. Tuberkuloza običajno okuži pljuča, lahko pa tudi druge telesne dele. Širi se po zraku, ko ljudje z aktivno tuberkulozno okužbo kašljajo, kihajo ali kako drugače prenašajo izdihano tekočino skozi zrak. Klasični znaki aktivne okužbe s tuberkulozo so kronični kašelj, krvav izmeček, vročica, nočno potenje in hujšanje.\n Ena tretjina svetovnega prebivalstva naj bi bila okuženas tuberkulozo, do novih okužb prihaja letno pri približno 1 % prebivalstva. Porazdelitev pa ni enakomerna, približno 80 % prebivalstva v številnih azijskih in afriških državah je pozitivnega na tuberkulinski test, v ZDA pa je pozitivnih samo 5-10 % prebivalcev. V razvijajočem se svetu se s tuberkulozo zaradi zmanjšane odpornosti okuži vse več ljudi, predvsem zaradi visoke ravni okužbe s HIV-om in z njo povezanim razvojem AIDS-a."
     } 
     besedilo
   })
+  
+  output$graf <- renderPlot({
+    if (input$bolezen == "AIDS") {
+      aids <- filter(bolezni, bolezen == "hiv") %>% 
+        filter(drzava == "Botswana" | drzava == "Lesotho" | drzava == "South Africa" | 
+                 drzava == "Swaziland" | drzava == "Zimbabwe")
+      aids$bolezen <- NULL
+      g <- ggplot(aids) + 
+        aes(x = leto, y = pojavnost, group = drzava, color = slovar[parse_character(drzava)]) + 
+        geom_line() + labs(y = "delež okuženih z virusom hiv")
+    } else if (input$bolezen == "kolera") {
+      kole <- filter(bolezni, bolezen == "kolera") %>% 
+        filter(drzava == "Afghanistan" | drzava == "Haiti" | drzava == "South Africa" | 
+                 drzava == "Somalia" | drzava == "Zimbabwe")
+      kole$bolezen <- NULL
+      g <- ggplot(kole)  +
+        aes(x = leto, y = pojavnost / 1000000, group = drzava, 
+            color = slovar[parse_character(drzava)]) + geom_line() + 
+        labs(y = "število obolelih za kolero (v milijonih)")
+    } else if (input$bolezen == "malarija") {
+      mala <- filter(bolezni, bolezen == "malarija") %>% 
+        filter(drzava == "Ghana" | drzava == "India" | drzava == "Mozambique" | drzava == "Uganda" | 
+                 drzava == "United Republic of Tanzania")
+      mala$bolezen <- NULL
+      g <- ggplot(mala) + aes(x = leto, y = pojavnost / 1000000, group = drzava, 
+                                   color = slovar[parse_character(drzava)]) + geom_line() +
+        labs(y = "število obolelih za malarijo (v milijonih)")
+    } else if (input$bolezen == "prirojeni sifilis") {
+      sifi <- filter(bolezni, bolezen == "sifilis") %>% 
+        filter(drzava == "Brazil" | drzava == "Colombia" | drzava == "Grenada" |
+                 drzava == "Federated States of Micronesia" |  drzava == "Nauru")
+      sifi$bolezen <- NULL
+      g <- ggplot(sifi) + aes(x = leto, y = pojavnost, 
+                                   color =  slovar[parse_character(drzava)]) + geom_point() + theme_bw() + 
+        labs(y = "delež obolelih za prirojenim sifilisom (v milijonih)") + 
+        guides(color = guide_legend(title = "Država"))
+    } else {
+      tube <- filter(bolezni, bolezen == "tuberkuloza") %>% 
+        filter(drzava == "Central African Republic" | drzava == "Namibia" |
+                 drzava == "North Korea" | drzava == "South Africa" |  drzava == "Swaziland")
+      tube$bolezen <- NULL
+      g <- ggplot(tube) + aes(x = leto, y = pojavnost, group = drzava,
+                                   color =  slovar[parse_character(drzava)]) + geom_line() + 
+        labs(y = "delež obolelih za tuberkulozo")
+    } 
+    g  + geom_point() + theme_bw() + guides(color = guide_legend(title = "Država"))
+  })
+  
   
   output$bolezni <- renderPlot({
     if (input$bolezen == "AIDS") {
@@ -44,7 +92,7 @@ shinyServer(function(input, output){
                                    aes(x = long, y = lat, group = group, color = "black", 
                                        fill = pojavnost)) + 
         ggtitle("Zemljevid prikazuje razširjenost malarije")
-    } else if (input$bolezen == "sifilis") {
+    } else if (input$bolezen == "prirojeni sifilis") {
       sif <- filter(bolezni, leto == input$leto, bolezen == "sifilis")
       sif$bolezen <- NULL
       sif$leto <- NULL
@@ -52,7 +100,7 @@ shinyServer(function(input, output){
                                        aes(x = long, y = lat, group = group, color = "black", 
                                            fill = pojavnost)) + 
         ggtitle("Zemljevid prikazuje razširjenost prirojenega sifilisa") + 
-        labs(caption = "Opomba: Podatki o sifilisu so dostopni zgolj za leti 2012 in 2013.")
+        labs(caption = "Opomba: Podatki o prirojenem sifilisu so dostopni zgolj za leti 2012 in 2013.")
     } else {
       tub <- filter(bolezni, leto == input$leto, bolezen == "tuberkuloza")
       tub$bolezen <- NULL
