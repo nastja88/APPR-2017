@@ -17,6 +17,23 @@ shinyServer(function(input, output){
     besedilo
   })
   
+  
+  output$povezava <- renderText({
+    if (input$bolezen == "AIDS") {
+      link <- "https://sl.wikipedia.org/wiki/Aids"
+    } else if (input$bolezen == "kolera") {
+      link <- "https://sl.wikipedia.org/wiki/Kolera"
+    } else if (input$bolezen == "malarija") {
+      link <- "https://sl.wikipedia.org/wiki/Malarija"
+    } else if (input$bolezen == "prirojeni sifilis") {
+      link <- "https://sl.wikipedia.org/wiki/Sifilis"
+    } else {
+      link <- "https://sl.wikipedia.org/wiki/Tuberkuloza"
+    } 
+    a(href=link, "Povzeto po")
+  })
+  
+  
   output$graf <- renderPlot({
     slovar <- c("Afghanistan" = "Afganistan", "Botswana" = "Bocvana", "Brazil" = "Brazilija", 
                 "Central African Republic" = "Srednjeafriška republika", "Colombia" = "Kolumbija", 
@@ -58,7 +75,7 @@ shinyServer(function(input, output){
       sifi$bolezen <- NULL
       g <- ggplot(sifi) + aes(x = leto, y = pojavnost, 
                                    color =  slovar[parse_character(drzava)]) + geom_point() + theme_bw() + 
-        labs(y = "delež obolelih za prirojenim sifilisom (v milijonih)") + 
+        labs(y = "delež obolelih za prirojenim sifilisom") + 
         guides(color = guide_legend(title = "Država"))
     } else {
       tube <- filter(bolezni, bolezen == "tuberkuloza") %>% 
@@ -70,6 +87,22 @@ shinyServer(function(input, output){
         labs(y = "delež obolelih za tuberkulozo")
     } 
     g  + geom_point() + theme_bw() + guides(color = guide_legend(title = "Država"))
+  })
+  
+  
+  output$razlaga <- renderText({
+    if (input$bolezen == "AIDS") {
+      besedilo <- "Iz zgornjega grafa je razvidno skrb vzbujajoče dejstvo, da se delež okuženih z virusom HIV ponekod giblje kar okoli ene četrtine. Se pa na srečo v večini (afriških) držav zmanjšuje. Veliko izjemo pa predstavlja država Svazi, kjer se le ta vztrajno povečuje."
+    } else if (input$bolezen == "kolera") {
+      besedilo <- "V letih 2010-2013 je bilo število obolelih za kolero daleč največje na Haitiju. To pripisujem katastrofalnemu potresu 12. 1. 2010 z močjo 7. stopnje po Richterjevi lestvici. Zabeleženih je bilo tudi vsaj 33 popotresnih sunkov, od tega 14 z magnitudo med 5,0 in 5,9."
+    } else if (input$bolezen == "malarija") {
+      besedilo <- "Najhujše razmere so trenutno v Mozambiku in Ugandi, kjer se je med letoma 2013 in 2015 število obolelih za malarijo povečalo kar za 5 milijonov. Obolevnost narašča tudi v Gani, v Tanzaniji in Indiji (kjer je bilo leta 2000 najslabše stanje) pa je opazen trend padanja."
+    } else if (input$bolezen == "prirojeni sifilis") {
+      besedilo <- "Za prirojeni sifilis so dostopni podatki samo za leti 2012 in 2013. Prikazane so zgolj države, ki imajo najvišji delež obolelih. Najslabše stanje je bilo v Grenadi."
+    } else {
+      besedilo <- "Večino časa (med letoma 2002 in 2013) je bilo najslabše stanje v Svaziju, po najnovejših podatkih pa v Južni Afriki. Opazno je, da se bolezen seli iz južnega dela Afrike, npr. v Severno Korejo."
+    } 
+    besedilo
   })
   
   

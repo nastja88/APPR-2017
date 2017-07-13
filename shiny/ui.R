@@ -14,10 +14,12 @@ shinyUI(fluidPage(
                  selectInput("bolezen", "Bolezen:", 
                              choices = c("AIDS", "kolera", "malarija", "prirojeni sifilis", "tuberkuloza"),
                              multiple = FALSE),
-                 selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE)
+                 selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE),
+                 
+                 p("Za izbrano bolezen je prikazan kratek opis značilnosti in graf, ki prikazuje gibanje razširjenosti bolezni v petih državah, kjer je ta bolezen najpogostejša. Sledi še zemljevid pojavnosti bolezni po državah v izbranem letu.")
                  ),
     
-    mainPanel(textOutput("opis"), plotOutput("graf"), plotOutput("bolezni")))
+    mainPanel(textOutput("opis"), textOutput("povezava"), hr(), plotOutput("graf"), hr(), textOutput("razlaga"), hr(), plotOutput("bolezni")))
   
   )),
 

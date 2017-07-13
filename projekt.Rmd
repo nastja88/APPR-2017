@@ -84,8 +84,6 @@ Na naslednjem grafu je prikazano število okuženih z malarijo v letih od 2000 d
 g_mal1
 ```
 
-Spodnji graf prikazuje gibanje števila okuženih z malarijo v letih od 2000 do 2015 v izbranih petih državah. V Afriki le to narašča, razen v Tanzaniji pada, z nekaj vmesnimi skoki naraščanja. Drugače pa je v Indiji, kjer je bilo leta 2000 največ obolelih izmed vseh držav, za katere so znani podatki, od takrat naprej pa večinoma vsako leto zboli manj ljudi.   
-
 
 ## AIDS
 
