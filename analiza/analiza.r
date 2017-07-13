@@ -49,65 +49,6 @@ g_tob <- ggplot() + geom_polygon(data = svet %>% left_join(skupine0, by = c("sov
   guides(fill=guide_legend(title=NULL), color="none")
 
 
-# razširjenost malarije v določenih državah
-slovar <- c("Afghanistan" = "Afganistan", "Botswana" = "Bocvana", "Brazil" = "Brazilija", 
-            "Central African Republic" = "Srednjeafriška republika", "Colombia" = "Kolumbija", 
-            "Federated States of Micronesia" = "Federativne države Mikronezije", 
-            "Ghana" = "Gana", "Grenada" = "Grenada", "Haiti" = "Haiti", "India" = "Indija", 
-            "Lesotho" = "Lesoto", "Mozambique" = "Mozambik", "Namibia" = "Namibija", 
-            "Nauru" = "Nauru", "North Korea" = "Severna Koreja", "Somalia" = "Somalija", 
-            "South Africa" = "Južna Afrika", "Swaziland" = "Svazi", "Uganda" = "Uganda", 
-            "United Republic of Tanzania" = "Tanzanija", "Zimbabwe" = "Zimbabve")
-mala <- filter(bolezni, bolezen == "malarija") %>% 
-  filter(drzava == "Ghana" | drzava == "India" | drzava == "Mozambique" | drzava == "Uganda" | 
-              drzava == "United Republic of Tanzania")
-mala$bolezen <- NULL
-g_mal2 <- ggplot(mala) + aes(x = leto, y = pojavnost / 1000000, group = drzava, 
-                   color = slovar[parse_character(drzava)]) + geom_point() + 
-  geom_line() + theme_bw() + labs(y = "število obolelih za malarijo (v milijonih)") + 
-  guides(color = guide_legend(title = "Država"))
-
-# razširjenost virusa hiv v določenih državah
-aids <- filter(bolezni, bolezen == "hiv") %>% 
-  filter(drzava == "Botswana" | drzava == "Lesotho" | drzava == "South Africa" | 
-           drzava == "Swaziland" | drzava == "Zimbabwe")
-aids$bolezen <- NULL
-g_hiv1 <- ggplot(aids) + aes(x = leto, y = pojavnost, group = drzava, 
-                             color = slovar[parse_character(drzava)]) + geom_point() + 
-  geom_line() + theme_bw() + labs(y = "delež okuženih z virusom hiv") + 
-  guides(color = guide_legend(title = "Država"))
-
-# razširjenost kolere v določenih državah
-kole <- filter(bolezni, bolezen == "kolera") %>% 
-  filter(drzava == "Afghanistan" | drzava == "Haiti" | drzava == "South Africa" | 
-           drzava == "Somalia" | drzava == "Zimbabwe")
-kole$bolezen <- NULL
-g_kol1 <- ggplot(kole) + aes(x = leto, y = pojavnost / 1000000, group = drzava, 
-                             color = slovar[parse_character(drzava)]) + geom_point() + 
-  geom_line() + theme_bw() + labs(y = "število obolelih za kolero (v milijonih)") + 
-  guides(color = guide_legend(title = "Država"))
-
-# razširjenost sifilisa v določenih državah
-sifi <- filter(bolezni, bolezen == "sifilis") %>% 
-  filter(drzava == "Brazil" | drzava == "Colombia" | drzava == "Grenada" |
-           drzava == "Federated States of Micronesia" |  drzava == "Nauru")
-sifi$bolezen <- NULL
-g_sif1 <- ggplot(sifi) + aes(x = leto, y = pojavnost, 
-                             color =  slovar[parse_character(drzava)]) + geom_point() + theme_bw() + 
-  labs(y = "delež obolelih za sifilisom (v milijonih)") + 
-  guides(color = guide_legend(title = "Država"))
-
-# razširjenost tuberkuloze v določenih državah
-tube <- filter(bolezni, bolezen == "tuberkuloza") %>% 
-  filter(drzava == "Central African Republic" | drzava == "Namibia" |
-           drzava == "North Korea" | drzava == "South Africa" |  drzava == "Swaziland")
-tube$bolezen <- NULL
-g_tube <- ggplot(tube) + aes(x = leto, y = pojavnost, group = drzava,
-                             color =  slovar[parse_character(drzava)]) + geom_point() + geom_line() + 
-  theme_bw() + labs(y = "delež obolelih za tuberkulozo") + 
-  guides(color = guide_legend(title = "Država")) 
-
-
 rm(alk, den, vod, zenske, moski)
 
 

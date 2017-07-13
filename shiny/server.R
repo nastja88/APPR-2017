@@ -18,6 +18,14 @@ shinyServer(function(input, output){
   })
   
   output$graf <- renderPlot({
+    slovar <- c("Afghanistan" = "Afganistan", "Botswana" = "Bocvana", "Brazil" = "Brazilija", 
+                "Central African Republic" = "Srednjeafriška republika", "Colombia" = "Kolumbija", 
+                "Federated States of Micronesia" = "Federativne države Mikronezije", 
+                "Ghana" = "Gana", "Grenada" = "Grenada", "Haiti" = "Haiti", "India" = "Indija", 
+                "Lesotho" = "Lesoto", "Mozambique" = "Mozambik", "Namibia" = "Namibija", 
+                "Nauru" = "Nauru", "North Korea" = "Severna Koreja", "Somalia" = "Somalija", 
+                "South Africa" = "Južna Afrika", "Swaziland" = "Svazi", "Uganda" = "Uganda", 
+                "United Republic of Tanzania" = "Tanzanija", "Zimbabwe" = "Zimbabve")
     if (input$bolezen == "AIDS") {
       aids <- filter(bolezni, bolezen == "hiv") %>% 
         filter(drzava == "Botswana" | drzava == "Lesotho" | drzava == "South Africa" | 
