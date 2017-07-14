@@ -41,6 +41,58 @@ shinyServer(function(input, output){
   })
   
   
+  output$bolezni <- renderPlot({
+    if (input$bolezen == "AIDS") {
+      hi <- filter(bolezni, leto == input$leto, bolezen == "hiv") 
+      hi$bolezen <- NULL
+      hi$leto <- NULL
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(hi, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Razširjenost virusa HIV") + guides(fill = guide_colorbar(title = "Delež")) +
+        labs(caption = "Opomba: AIDS tu v resnici ne pomeni bolezni, pač pa označuje okužene z virusom hiv.")
+    } else if (input$bolezen == "kolera") { 
+      kol <- filter(bolezni, leto == input$leto, bolezen == "kolera")
+      kol$bolezen <- NULL
+      kol$leto <- NULL
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(kol, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Razširjenost kolere") + guides(fill = guide_colorbar(title = "Pojavnost")) +
+        labs(caption = "Opomba: Za leta 2004, 2006 in 2007 ni podatkov.")
+    } else if (input$bolezen == "malarija") {
+      mal <- filter(bolezni, leto == input$leto, bolezen == "malarija") 
+      mal$bolezen <- NULL
+      mal$leto <- NULL
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(mal, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Razširjenost malarije") + guides(fill = guide_colorbar(title = "Pojavnost")) 
+    } else if (input$bolezen == "prirojeni sifilis") {
+      sif <- filter(bolezni, leto == input$leto, bolezen == "sifilis")
+      sif$bolezen <- NULL
+      sif$leto <- NULL
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(sif, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Razširjenost prirojenega sifilisa") + 
+        guides(fill = guide_colorbar(title = "Delež")) +
+        labs(caption = "Opomba: Podatki o prirojenem sifilisu so dostopni zgolj za leti 2012 in 2013.")
+    } else {
+      tub <- filter(bolezni, leto == input$leto, bolezen == "tuberkuloza")
+      tub$bolezen <- NULL
+      tub$leto <- NULL
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(tub, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Razširjenost tuberkuloze") + guides(fill = guide_colorbar(title = "Delež")) 
+    }
+    z + theme_void() + theme(plot.title = element_text(hjust = 0.5)) + 
+      scale_fill_gradientn(colours = c("blue", "green", "red"), 
+                           values = rescale(c(0, 50, 200, 700)))
+  })
+  
+  
   output$graf <- renderPlot({
     slovar <- c("Afghanistan" = "Afganistan", "Botswana" = "Bocvana", "Brazil" = "Brazilija", 
                 "Central African Republic" = "Srednjeafriška republika", "Colombia" = "Kolumbija", 
@@ -50,7 +102,7 @@ shinyServer(function(input, output){
                 "Nauru" = "Nauru", "North Korea" = "Severna Koreja", "Somalia" = "Somalija", 
                 "South Africa" = "Južna Afrika", "Swaziland" = "Svazi", "Uganda" = "Uganda", 
                 "United Republic of Tanzania" = "Tanzanija", "Zimbabwe" = "Zimbabve")
-    if (input$bolezen == "AIDS") {
+    if (input$bolezen1 == "AIDS") {
       aids <- filter(bolezni, bolezen == "hiv") %>% 
         filter(drzava == "Botswana" | drzava == "Lesotho" | drzava == "South Africa" | 
                  drzava == "Swaziland" | drzava == "Zimbabwe")
@@ -58,7 +110,7 @@ shinyServer(function(input, output){
       g <- ggplot(aids) + 
         aes(x = leto, y = pojavnost, group = drzava, color = slovar[parse_character(drzava)]) + 
         geom_line() + labs(y = "delež okuženih z virusom hiv")
-    } else if (input$bolezen == "kolera") {
+    } else if (input$bolezen1 == "kolera") {
       kole <- filter(bolezni, bolezen == "kolera") %>% 
         filter(drzava == "Afghanistan" | drzava == "Haiti" | drzava == "South Africa" | 
                  drzava == "Somalia" | drzava == "Zimbabwe")
@@ -67,21 +119,21 @@ shinyServer(function(input, output){
         aes(x = leto, y = pojavnost / 1000000, group = drzava, 
             color = slovar[parse_character(drzava)]) + geom_line() + 
         labs(y = "število obolelih za kolero (v milijonih)")
-    } else if (input$bolezen == "malarija") {
+    } else if (input$bolezen1 == "malarija") {
       mala <- filter(bolezni, bolezen == "malarija") %>% 
         filter(drzava == "Ghana" | drzava == "India" | drzava == "Mozambique" | drzava == "Uganda" | 
                  drzava == "United Republic of Tanzania")
       mala$bolezen <- NULL
       g <- ggplot(mala) + aes(x = leto, y = pojavnost / 1000000, group = drzava, 
-                                   color = slovar[parse_character(drzava)]) + geom_line() +
+                              color = slovar[parse_character(drzava)]) + geom_line() +
         labs(y = "število obolelih za malarijo (v milijonih)")
-    } else if (input$bolezen == "prirojeni sifilis") {
+    } else if (input$bolezen1 == "prirojeni sifilis") {
       sifi <- filter(bolezni, bolezen == "sifilis") %>% 
         filter(drzava == "Brazil" | drzava == "Colombia" | drzava == "Grenada" |
                  drzava == "Federated States of Micronesia" |  drzava == "Nauru")
       sifi$bolezen <- NULL
       g <- ggplot(sifi) + aes(x = leto, y = pojavnost, 
-                                   color =  slovar[parse_character(drzava)]) + geom_point() + theme_bw() + 
+                              color =  slovar[parse_character(drzava)]) + geom_point() + theme_bw() + 
         labs(y = "delež obolelih za prirojenim sifilisom") + 
         guides(color = guide_legend(title = "Država"))
     } else {
@@ -90,7 +142,7 @@ shinyServer(function(input, output){
                  drzava == "North Korea" | drzava == "South Africa" |  drzava == "Swaziland")
       tube$bolezen <- NULL
       g <- ggplot(tube) + aes(x = leto, y = pojavnost, group = drzava,
-                                   color =  slovar[parse_character(drzava)]) + geom_line() + 
+                              color =  slovar[parse_character(drzava)]) + geom_line() + 
         labs(y = "delež obolelih za tuberkulozo")
     } 
     g  + geom_point() + theme_bw() + guides(color = guide_legend(title = "Država"))
@@ -98,13 +150,13 @@ shinyServer(function(input, output){
   
   
   output$razlaga <- renderText({
-    if (input$bolezen == "AIDS") {
+    if (input$bolezen1 == "AIDS") {
       besedilo <- "Iz zgornjega grafa je razvidno skrb vzbujajoče dejstvo, da se delež okuženih z virusom HIV ponekod giblje kar okoli ene četrtine. Se pa na srečo v večini (afriških) držav zmanjšuje. Veliko izjemo pa predstavlja država Svazi, kjer se le ta vztrajno povečuje."
-    } else if (input$bolezen == "kolera") {
+    } else if (input$bolezen1 == "kolera") {
       besedilo <- "V letih 2010-2013 je bilo število obolelih za kolero daleč največje na Haitiju. To pripisujem katastrofalnemu potresu 12. 1. 2010 z močjo 7. stopnje po Richterjevi lestvici. Zabeleženih je bilo tudi vsaj 33 popotresnih sunkov, od tega 14 z magnitudo med 5,0 in 5,9."
-    } else if (input$bolezen == "malarija") {
+    } else if (input$bolezen1 == "malarija") {
       besedilo <- "Najhujše razmere so trenutno v Mozambiku in Ugandi, kjer se je med letoma 2013 in 2015 število obolelih za malarijo povečalo kar za 5 milijonov. Obolevnost narašča tudi v Gani, v Tanzaniji in Indiji (kjer je bilo leta 2000 najslabše stanje) pa je opazen trend padanja."
-    } else if (input$bolezen == "prirojeni sifilis") {
+    } else if (input$bolezen1 == "prirojeni sifilis") {
       besedilo <- "Za prirojeni sifilis so dostopni podatki samo za leti 2012 in 2013. Prikazane so zgolj države, ki imajo najvišji delež obolelih. Najslabše stanje je bilo v Grenadi."
     } else {
       besedilo <- "Večino časa (med letoma 2002 in 2013) je bilo najslabše stanje v Svaziju, po najnovejših podatkih pa v Južni Afriki. Opazno je, da se bolezen seli iz južnega dela Afrike, npr. v Severno Korejo."
@@ -113,133 +165,84 @@ shinyServer(function(input, output){
   })
   
   
-  output$bolezni <- renderPlot({
-    if (input$bolezen == "AIDS") {
-      hi <- filter(bolezni, leto == input$leto, bolezen == "hiv") 
-      hi$bolezen <- NULL
-      hi$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(hi, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
-        ggtitle("Razširjenost okuženosti z virusom hiv") + 
-        guides(fill = guide_legend(title = "Delež")) +
-        labs(caption = "Opomba: AIDS tu v resnici ne pomeni bolezni, pač pa označuje okužene z virusom hiv.")
-    } else if (input$bolezen == "kolera") { 
-      kol <- filter(bolezni, leto == input$leto, bolezen == "kolera")
-      kol$bolezen <- NULL
-      kol$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(kol, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost/1000000)) + 
-        ggtitle("Razširjenost kolere") + 
-        guides(fill = guide_legend(title = "Število  obolelih (v milijonih)")) +
-        labs(caption = "Opomba: Za leta 2004, 2006 in 2007 ni podatkov.")
-    } else if (input$bolezen == "malarija") {
-      mal <- filter(bolezni, leto == input$leto, bolezen == "malarija") 
-      mal$bolezen <- NULL
-      mal$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(mal, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost/1000000)) + 
-        ggtitle("Razširjenost malarije") + 
-        guides(fill = guide_legend(title = "Število obolelih (v milijonih)"))
-    } else if (input$bolezen == "prirojeni sifilis") {
-      sif <- filter(bolezni, leto == input$leto, bolezen == "sifilis")
-      sif$bolezen <- NULL
-      sif$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(sif, by = c("sovereignt" = "drzava")),
-                                       aes(x = long, y = lat, group = group, color = "black", 
-                                           fill = pojavnost)) + 
-        ggtitle("Razširjenost prirojenega sifilisa") + 
-        guides(fill = guide_legend(title = "Delež")) +
-        labs(caption = "Opomba: Podatki o prirojenem sifilisu so dostopni zgolj za leti 2012 in 2013.")
-    } else {
-      tub <- filter(bolezni, leto == input$leto, bolezen == "tuberkuloza")
-      tub$bolezen <- NULL
-      tub$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(tub, by = c("sovereignt" = "drzava")),
-                                    aes(x = long, y = lat, group = group, color = "black", 
-                                        fill = pojavnost)) + 
-        ggtitle("Razširjenost tuberkuloze") + guides(fill = guide_legend(title = "Delež"))
-    }
-    z + theme_void() + theme(plot.title = element_text(hjust = 0.5)) + 
-      guides(fill=guide_legend(title=NULL), color="none") + 
-      scale_fill_gradientn(colours = c("blue", "green", "red"), 
-                           values = rescale(c(0, 50, 200, 700)))
-  })
-  
-  
   output$znacilnosti <- renderPlot({
     if (input$znacilnost == "dostopnost pitne vode") {
       vo <- filter(znacilnosti, leto == input$leto1, znacilnost == "voda") 
       vo$znacilnost <- NULL
       vo$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(vo, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
-        ggtitle("Delež populacije z dostopom do izboljšanega pitnega vodnega vira*") + 
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(vo, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Dostop do izboljšanega pitnega vodnega vira*") + 
+        guides(fill = guide_colorbar(title = "Delež populacije")) +
         labs(caption = "* zasebna in javna vodovodna napeljava, javni hidranti, zavarovani vodnjaki in izviri, zbrana deževnica.")
     } else if (input$znacilnost == "zdravstvena potrošnja na prebivalca") { 
       de <- filter(znacilnosti, leto == input$leto1, znacilnost == "denar")
       de$znacilnost <- NULL
       de$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(de, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
-        ggtitle("Zdravstvena potrošnja na prebivalca (preračunano na mednarodni dolar, 2011)") + 
-        labs(caption = "Opomba: za leto 2015 ni podatkov.")
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(de, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Zdravstvena potrošnja na prebivalca (mednarodni dolar, 2011)") + 
+        labs(caption = "Opomba: za leto 2015 ni podatkov.") + 
+        guides(fill = guide_colorbar(title = "Vsota"))
     } else if (input$znacilnost == "število plačanih prostih dni") { 
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(tabela, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = dopust)) + 
-        ggtitle("Minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku") + 
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(tabela, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = dopust)) +
+        guides(fill = guide_colorbar(title = "Število")) +
+        ggtitle("Minimalno število plačanih prostih dni pri petdnevnem delovniku") + 
         labs(caption = "Opomba: Podatki prikazujejo današnje stanje. Korelacija med tem in razširjenostjo bolezni ni opazna.")
     } else if (input$znacilnost == "stopnja podhranjenosti") { 
       po <- filter(znacilnosti, leto == input$leto1, znacilnost == "podhranjenost")
       po$znacilnost <- NULL
       po$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(po, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
-        ggtitle("Delež otrok, mlajših od pet let, s prenizko telesno težo")
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(po, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        ggtitle("Delež otrok, mlajših od pet let, s prenizko telesno težo") + 
+        guides(fill = guide_colorbar(title = "Delež"))
     }  else if (input$znacilnost == "stopnja debelosti") { 
       de1 <- filter(znacilnosti, leto == input$leto1, znacilnost == "debelost")
       de1$znacilnost <- NULL
       de1$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(de1, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
-        ggtitle("Delež otrok, mlajših od pet let, s previsoko telesno težo")
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(de1, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) +  
+        ggtitle("Delež otrok, mlajših od pet let, s previsoko telesno težo") + 
+        guides(fill = guide_colorbar(title = "Delež"))
     } else if (input$znacilnost == "količina porabljenega alkohola na osebo") { 
       al <- filter(znacilnosti, leto == input$leto1, znacilnost == "alkohol")
       al$znacilnost <- NULL
       al$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(al, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(al, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        guides(fill = guide_colorbar(title = "Količina")) +
         ggtitle("Poraba alkohola med osebami, starejšimi od 15 let, v litrih čistega alkohola") + 
         labs(caption = "Opomba: Opazno je, da je v muslimanskih državah poraba alkohola izredno majhna.")
     } else if (input$znacilnost == "stopnja kadilcev") { 
       tm <- filter(tobak, leto == input$leto1, spol == "moski")
       tm$znacilnost <- NULL
       tm$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(tm, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(tm, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) +  
+        guides(fill = guide_colorbar(title = "Delež")) +
         ggtitle("Delež moških, starejših od 15 let, ki kadijo katerikoli tobačni izdelek") + 
         labs(caption = "Opomba: podatki so dostopni samo za leta 2000, 2005, 2010, 2012 in 2015.")
     } else { 
       tz <- filter(tobak, leto == input$leto1, spol == "zenske")
       tz$znacilnost <- NULL
       tz$leto <- NULL
-      z <- ggplot() + geom_polygon(data = svet %>% left_join(tz, by = c("sovereignt" = "drzava")),
-                                   aes(x = long, y = lat, group = group, color = "black", 
-                                       fill = pojavnost)) + 
+      z <- ggplot() + 
+        geom_polygon(data = svet %>% left_join(tz, by = c("sovereignt" = "drzava")), 
+                     color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
+        guides(fill = guide_colorbar(title = "Delež")) +
         ggtitle("Delež žensk, starejših od 15 let, ki kadijo katerikoli tobačni izdelek") + 
         labs(caption = "Opomba: podatki so dostopni samo za leta 2000, 2005, 2010, 2012 in 2015.")
     } 
-    z + theme_void() + theme(plot.title = element_text(hjust = 0.5)) + 
-      guides(fill=guide_legend(title=NULL), color="none") + 
+    z + theme_void() + theme(plot.title = element_text(hjust = 0.5)) +
       scale_fill_gradientn(colours = c("blue", "green", "red"), 
                            values = rescale(c(0, 50, 200, 700)))
   })

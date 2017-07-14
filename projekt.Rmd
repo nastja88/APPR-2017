@@ -106,14 +106,14 @@ Sprva sem hotela razvrstiti države glede na vse značilnosti, vendar sem ugotov
 
 Tako sem države razvrstila v pet skupin zgolj na podlagi dostopnosti pitne vode in denarnih sredstev za zdravstveno oskrbo, kar prikazuje spodnji zemljevid. Opazimo, da sta glede bolezni (glej interaktivni del poročila) najbolj kritični dve skupini, ki se deloma ujemata s skupinami na zemljevidu: prva predstavlja južni del Afrike, druga pa Južno in Jugovzhodno Azijo. V teh dveh skupinah sta dostop do pitne vode in denarna podprtost zdravstvenega sektorja zelo slaba (v prej omenjenem azijskem delu nekoliko boljša, zato je tudi pogostost bolezni manjša).
 
+S tem sem potrdila pričakovan rezultat: dostopnost do izboljšanega pitnega vodnega vira in količina sredstev namenjenih za zdravstveno porabo sta v močni negativni korelaciji z razširjenostjo proučevanih bolezni.
+
 ```{r razvrscanje, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
 g_zna0
 ```
 
-Tako sem potrdila pričakovan rezultat: dostopnost do izboljšanega pitnega vodnega vira in količina sredstev namenjenih za zdravstveno porabo sta v močni negativni korelaciji z razširjenostjo proučevanih bolezni. 
-
 ```{r shiny, echo=FALSE, message=FALSE}
-shinyAppDir("shiny", options = list(width = "100%", height = 500))
+shinyAppDir("shiny", options = list(width = "100%", height = 880))
 ```
 
 

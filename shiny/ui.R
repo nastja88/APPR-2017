@@ -6,7 +6,7 @@ shinyUI(fluidPage(
   
   
   tabsetPanel(
-    tabPanel("bolezni",
+    tabPanel("bolezni (opis)",
              hr(),
              sidebarLayout(
                
@@ -15,16 +15,27 @@ shinyUI(fluidPage(
                              choices = c("AIDS", "kolera", "malarija", "prirojeni sifilis", "tuberkuloza"),
                              multiple = FALSE),
                  selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE),
-                 
-                 p("Za izbrano bolezen je prikazan kratek opis značilnosti in graf, ki prikazuje gibanje razširjenosti bolezni v petih državah, kjer je ta bolezen najpogostejša. Sledi še zemljevid pojavnosti bolezni po državah v izbranem letu. (Za sivo obarvane države ni podatka.)")
+                 p("Za izbrano bolezen je prikazan kratek opis značilnosti Sledi še zemljevid pojavnosti bolezni po državah v izbranem letu. (Za sivo obarvane države ni podatka.)")
                  ),
     
-    mainPanel(uiOutput("opis"), uiOutput("povezava"), hr(), plotOutput("graf"), hr(), textOutput("razlaga"), hr(), plotOutput("bolezni")))
+              mainPanel(uiOutput("opis"), uiOutput("povezava"), hr(), plotOutput("bolezni")))),
+    
+    
+    tabPanel("bolezni (graf)",
+             hr(),
+             sidebarLayout(
+               
+               sidebarPanel(("Izberi željene podatke:"),
+                            selectInput("bolezen1", "Bolezen:",
+                                        choices = c("AIDS", "kolera", "malarija", "prirojeni sifilis", "tuberkuloza"),
+                                        multiple = FALSE),
+                            p("Za izbrano bolezen je prikazan graf, ki prikazuje gibanje razširjenosti bolezni v petih državah, kjer je ta bolezen najpogostejša.")
+                            ),
+               
+               mainPanel(plotOutput("graf"), hr(), textOutput("razlaga"))
+             )),
   
-  )),
-
-  
-  tabsetPanel(
+    
     tabPanel("značilnosti",
              hr(),
              sidebarLayout(
@@ -48,6 +59,5 @@ shinyUI(fluidPage(
                mainPanel(plotOutput("znacilnosti")))
              
     )
-  )
-
+)
 ))
