@@ -15,14 +15,14 @@ svet <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthd
 
 
 # število okuženih z malarijo po državah
-g_mal1 <- ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + 
+g_mal <- ggplot(filter(bolezni, bolezni$bolezen == "malarija" )) + 
   aes(x = leto, y = pojavnost/1000000, group = leto) + 
-  geom_boxplot() + theme_bw() + labs(y="število okuženih z malarijo (v milijonih)")
+  geom_boxplot(color = "blue") + theme_bw() + labs(y="število okuženih z malarijo (v milijonih)")
 
 # globalna poraba alkohola (15+)
 alko <- filter(znacilnosti, znacilnosti$znacilnost == "alkohol") %>% group_by(leto) %>% 
   summarise(povprecje = mean(pojavnost)) 
-g_alk1 <- ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + 
+g_alk <- ggplot(alko) + aes(x=leto, y=povprecje) + geom_point() + 
   geom_smooth(method = "lm", formula = y ~ x + I(x^2)) + theme_bw() + 
   labs(y="globalna poraba alkohola (15+) [liter čistega alkohola]")
 
