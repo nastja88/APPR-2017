@@ -32,7 +32,7 @@ shinyUI(fluidPage(
                             p("Za izbrano bolezen je prikazan graf, ki prikazuje gibanje razširjenosti bolezni v petih državah, kjer je ta bolezen najpogostejša.")
                             ),
                
-               mainPanel(plotOutput("graf"), hr(), textOutput("razlaga"))
+               mainPanel(plotOutput("graf"), hr(), uiOutput("razlaga"))
              )),
   
     

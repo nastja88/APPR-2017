@@ -37,7 +37,7 @@ shinyServer(function(input, output){
     } else {
       link <- "https://sl.wikipedia.org/wiki/Tuberkuloza"
     } 
-    a(href=link, link)
+    p("Povzeto po:", a(href=link, link), ".")
   })
   
   
@@ -149,17 +149,17 @@ shinyServer(function(input, output){
   })
   
   
-  output$razlaga <- renderText({
+  output$razlaga <- renderUI({
     if (input$bolezen1 == "AIDS") {
-      besedilo <- "Iz zgornjega grafa je razvidno skrb vzbujajoče dejstvo, da se delež okuženih z virusom HIV ponekod giblje kar okoli ene četrtine. Se pa na srečo v večini (afriških) držav zmanjšuje. Veliko izjemo predstavlja država Svazi, kjer se le ta vztrajno povečuje."
+      besedilo <- p("Iz zgornjega grafa je razvidno skrb vzbujajoče dejstvo, da se delež okuženih z virusom HIV ponekod giblje kar okoli ene četrtine. Se pa na srečo v večini (afriških) držav zmanjšuje. Veliko izjemo predstavlja država Svazi, kjer se le ta vztrajno povečuje.")
     } else if (input$bolezen1 == "kolera") {
-      besedilo <- "V letih 2010-2013 je bilo število obolelih za kolero daleč največje na Haitiju. To pripisujem katastrofalnemu potresu 12. 1. 2010 z močjo 7. stopnje po Richterjevi lestvici. Zabeleženih je bilo tudi vsaj 33 popotresnih sunkov, od tega 14 z magnitudo med 5,0 in 5,9."
+      besedilo <- p("V letih 2010-2013 je bilo število obolelih za kolero daleč največje na Haitiju. To pripisujem katastrofalnemu potresu 12. 1. 2010 z močjo 7. stopnje po Richterjevi lestvici. Zabeleženih je bilo tudi vsaj 33 popotresnih sunkov, od tega 14 z magnitudo med 5,0 in 5,9.", hr(), a(href="https://sl.wikipedia.org/wiki/Potres_na_Haitiju_(2010)", "https://sl.wikipedia.org/wiki/Potres_na_Haitiju_(2010)"))
     } else if (input$bolezen1 == "malarija") {
-      besedilo <- "Najhujše razmere so trenutno v Mozambiku in Ugandi, kjer se je med letoma 2013 in 2015 število obolelih za malarijo povečalo kar za 5 milijonov. Obolevnost narašča tudi v Gani, v Tanzaniji in Indiji (kjer je bilo leta 2000 najslabše stanje) pa je opazen trend padanja."
+      besedilo <- p("Najhujše razmere so trenutno v Mozambiku in Ugandi, kjer se je med letoma 2013 in 2015 število obolelih za malarijo povečalo kar za 5 milijonov. Obolevnost narašča tudi v Gani, v Tanzaniji in Indiji (kjer je bilo leta 2000 najslabše stanje) pa je opazen trend padanja.")
     } else if (input$bolezen1 == "prirojeni sifilis") {
-      besedilo <- "Za prirojeni sifilis so dostopni podatki samo za leti 2012 in 2013. Prikazane so zgolj države, ki imajo najvišji delež obolelih. Najslabše stanje je bilo v Grenadi."
+      besedilo <- p("Za prirojeni sifilis so dostopni podatki samo za leti 2012 in 2013. Prikazane so zgolj države, ki imajo najvišji delež obolelih. Najslabše stanje je bilo v Grenadi.")
     } else {
-      besedilo <- "Večino časa (med letoma 2002 in 2013) je bilo najslabše stanje v Svaziju, po najnovejših podatkih pa v Južni Afriki. Opazno je, da se bolezen seli iz južnega dela Afrike, npr. v Severno Korejo."
+      besedilo <- p("Večino časa (med letoma 2002 in 2013) je bilo najslabše stanje v Svaziju, po najnovejših podatkih pa v Južni Afriki. Opazno je, da se bolezen seli iz južnega dela Afrike, npr. v Severno Korejo.")
     } 
     besedilo
   })
@@ -175,7 +175,7 @@ shinyServer(function(input, output){
                      color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
         ggtitle("Dostop do izboljšanega pitnega vodnega vira*") + 
         guides(fill = guide_colorbar(title = "Delež populacije")) +
-        labs(caption = "* vodovodna napeljava, javni hidranti, zavarovani vodnjaki in izviri, zbrana deževnica.")
+        labs(caption = "*vodovodna napeljava, javni hidranti, zavarovani vodnjaki in izviri, zbrana deževnica")
     } else if (input$znacilnost == "zdravstvena potrošnja na prebivalca") { 
       de <- filter(znacilnosti, leto == input$leto1, znacilnost == "denar")
       de$znacilnost <- NULL
