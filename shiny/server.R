@@ -175,7 +175,7 @@ shinyServer(function(input, output){
                      color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
         ggtitle("Dostop do izboljšanega pitnega vodnega vira*") + 
         guides(fill = guide_colorbar(title = "Delež populacije")) +
-        labs(caption = "* zasebna in javna vodovodna napeljava, javni hidranti, zavarovani vodnjaki in izviri, zbrana deževnica.")
+        labs(caption = "* vodovodna napeljava, javni hidranti, zavarovani vodnjaki in izviri, zbrana deževnica.")
     } else if (input$znacilnost == "zdravstvena potrošnja na prebivalca") { 
       de <- filter(znacilnosti, leto == input$leto1, znacilnost == "denar")
       de$znacilnost <- NULL
