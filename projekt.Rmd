@@ -37,7 +37,7 @@ Uvozila sem podatke o boleznih in potencialnih razlogih zanje v obliki CSV s spl
 
 ### Začetki razpredelnic:
 
-Tabela **bolezni** je sestavljena iz stolpcev *bolezen* (factor), *drzava*(factor), *leto*(numeric) in *pojavnost* (numeric, meritev). 
+Tabela **bolezni** je sestavljena iz stolpcev *bolezen* (factor), *drzava* (factor), *leto* (numeric) in *pojavnost* (numeric, meritev). 
 
 Spremenljivka *hiv* v stolpcu *bolezen* predstavlja delež okuženih z virusom hiv  na leto med osebami, ki so stare od 15 do 49 let. Spremenljivka *sifilis* predstavlja delež živorojenih otrok na leto, okuženih s prirojenim sifilisom, podobno *tuberkuloza* delež okuženih s tuberkulozo na leto. Spremenljivki *malarija* in *kolera* označujeta število potrjenih primerov malarije oz. kolere na leto. Podatki so zbrani za leta 2000-2015.
 
@@ -45,7 +45,7 @@ Spremenljivka *hiv* v stolpcu *bolezen* predstavlja delež okuženih z virusom h
 kable(head(bolezni), align="cccc")
 ```
 
-Tabelo **znacilnosti** sestavljajo stolpci *znacilnost*(factor), *drzava*(factor), *leto*(numeric) in *pojavnost* (numeric, meritev). 
+Tabelo **znacilnosti** sestavljajo stolpci *znacilnost* (factor), *drzava* (factor), *leto* (numeric) in *pojavnost* (numeric, meritev). 
 
 Spremenljivka *voda* v stolpcu *znacilnost* predstavlja delež populacije z dostopom do izboljšanega pitnega vodnega vira (zasebna in javna vodovodna napeljava, javni hidranti, zavarovani vodnjaki in izviri, zbrana deževnica). Spremenljivka *denar* pomeni zdravstveno potrošnjo na prebivalca (preračunano na mednarodni dolar, 2011). Spremenljivka *podhranjenost* (*debelost*) prikazuje delež otrok, mlajših od pet let, s prenizko (previsoko) telesno težo. Spremenljivka *alkohol* prikazuje porabo alkohola med osebami, starejšimi od 15 let, v litrih čistega alkohola. Podatki so zbrani za leta 2000-2015.
 
@@ -53,13 +53,13 @@ Spremenljivka *voda* v stolpcu *znacilnost* predstavlja delež populacije z dost
 kable(head(znacilnosti), align="cccc")
 ```
 
-Tabela **tobak** je sestavljena iz stolpcev *drzava*(factor), *leto*(numeric), *spol*(factor) in *pojavnost* (numeric, meritev), pri čemer spremenljivka *pojavnost* meri delež oseb starejših od 15 let, ki kadijo katerikoli tobačni izdelek. Našla sem podatke za leta 2000, 2005, 2010, 2012 in 2015.
+Tabela **tobak** je sestavljena iz stolpcev *drzava* (factor), *leto* (numeric), *spol* (factor) in *pojavnost* (numeric, meritev), pri čemer spremenljivka *pojavnost* meri delež oseb starejših od 15 let, ki kadijo katerikoli tobačni izdelek. Našla sem podatke za leta 2000, 2005, 2010, 2012 in 2015.
 
 ```{r tobak0, echo=FALSE, message=FALSE}
 kable(head(tobak), align="cccc")
 ```
 
-Tabelo **tabela** gradita stolpca *drzava*(factor) in *dopust* (numeric, meritev), v katerem je shranjeno minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku kot ga določa zakon. 
+Tabelo **tabela** gradita stolpca *drzava* (factor) in *dopust* (numeric, meritev), v katerem je shranjeno minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku kot ga določa zakon. 
 
 Velja še omeniti, da ponekod to število določijo delodajalci, in da se praznik, ki pride na soboto ali nedeljo, v ZDA in UK premakne kot plačan dela prost dan na najbližji ponedeljek oz. petek. 
 
@@ -72,10 +72,10 @@ kable(head(tabela), align="cccc")
 # Analiza in vizualizacija podatkov
 
 
-Na naslednjem grafu je prikazano število okuženih z malarijo v letih od 2000 do 2015, dodani so tudi kvartili porazdelitve. Opazen je velik trend naraščanja.
+Na naslednjem grafu je prikazano število okuženih z malarijo v letih od 2000 do 2015, dodani so tudi kvartili porazdelitve. Opazen je velik trend naraščanja, pojavljajo pa se tudi države s čedalje večjim odstopanjem.
 
 ```{r malarija1, fig.align='center', echo=FALSE, message=FALSE}
-g_mal1
+g_mal
 ```
 
 
@@ -84,7 +84,7 @@ Spodnji graf prikazuje globalno porabo alkohola med osebami, starimi vsaj 15 let
 Dodana je tudi kvadratna aproksimacija gibanja porabe alkohola, sledi pa še tabela, v kateri sem s pomočjo linearne regresije skušala napovedati porabo alkohola za naslednjih 10 let.
 
 ```{r alkohol, fig.align='center', echo=FALSE, message=FALSE}
-g_alk1
+g_alk
 kable(kv, align = "cc")
 ```
 
@@ -109,7 +109,7 @@ Tako sem države razvrstila v pet skupin zgolj na podlagi dostopnosti pitne vode
 S tem sem potrdila pričakovan rezultat: dostopnost do izboljšanega pitnega vodnega vira in količina sredstev namenjenih za zdravstveno porabo sta v močni negativni korelaciji z razširjenostjo proučevanih bolezni.
 
 ```{r razvrscanje, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
-g_zna0
+g_zna
 ```
 
 ```{r shiny, echo=FALSE, message=FALSE}
