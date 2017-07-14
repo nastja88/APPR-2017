@@ -25,7 +25,7 @@ shinyUI(fluidPage(
              hr(),
              sidebarLayout(
                
-               sidebarPanel(("Izberi željene podatke:"),
+               sidebarPanel(("Izberi željen podatek:"),
                             selectInput("bolezen1", "Bolezen:",
                                         choices = c("AIDS", "kolera", "malarija", "prirojeni sifilis", "tuberkuloza"),
                                         multiple = FALSE),

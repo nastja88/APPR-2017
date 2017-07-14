@@ -182,4 +182,4 @@ znacilnosti <- rbind(znac, alkohol)
 znacilnosti$drzava <- as.factor(znacilnosti$drzava)
 znacilnosti$znacilnost <- factor(znacilnosti$znacilnost)
 
-rm(bol, bole, kolera, sifilis, tuberkuloza, alkohol, worldbank, znac, who)
+rm(bol, bole, kolera, sifilis, tuberkuloza, alkohol, worldbank, znac, who, link, stran)

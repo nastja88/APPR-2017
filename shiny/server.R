@@ -10,12 +10,12 @@ shinyServer(function(input, output){
     } else if (input$bolezen == "kolera") {
       besedilo <- c("Kolera je akutna nalezljiva epidemična črevesna bolezen, ki jo povzroča bakterija Vibrio cholerae. Glavna simptoma sta driska in bruhanje. Pojavi se lahko odpoved obtočil in šok.", 
                     "Okužba se primarno prenaša z onesnaženo pitno vodo in hrano, ki je bila v stiku z blatom okužene osebe. Hudost driske in bruhanja lahko vodi do hitre izsušitve in elektrolitskega neravnovesja in v nekaterih primerih tudi do smrti.", 
-                    "Kolera verjetno izhaja iz indijske podceline, od pradavnih časov je prisotna v delti Gangesa. Po kopenskih in morskih trgovskih poti se je razširila v Rusijo leta 1817, nato pa po vsej Evropi. Iz Evrope se je razširila v Severno Ameriko. Leta 2010 se je okužilo od 3 do 5 milijonov ljudi, umrlo jih od 100.000 do 130.000.")
+                    "Kolera verjetno izhaja iz indijske podceline, od pradavnih časov je prisotna v delti Gangesa. Po kopenskih in morskih trgovskih poti se je razširila v Rusijo leta 1817, nato pa po vsej Evropi. Iz Evrope se je razširila v Severno Ameriko. Leta 2010 se je z njo okužilo od 3 do 5 milijonov ljudi, umrlo jih od 100.000 do 130.000.")
     } else if (input$bolezen == "malarija") {
-      besedilo <- c("Malarija je nalezljiva bolezen, ki jo povzročajo nekatere vrste zajedavskih praživali iz razreda trosovcev, plazmodiji. Letno se pojavi približno 350-500 milijonov okužb in od 1-3 milijonov smrti, pretežno v tropih in podsaharski Afriki. Prenašalec malarije je komar mrzličar.", 
+      besedilo <- c("Malarija je nalezljiva bolezen, ki jo povzročajo nekatere vrste zajedavskih praživali iz razreda trosovcev, plazmodiji. Letno se pojavi približno 350-500 milijonov okužb in 1-3 milijonov smrti, pretežno v tropih in podsaharski Afriki. Prenašalec malarije je komar mrzličar.", 
                     "Bolezenski znaki malarije so mrzlica, drgetanje, bolečine v sklepih, bljuvanje in krči, včasih pa tudi ščemenje kože. Pri težjih oblikah se lahko pojavi koma in, če bolezni ne zdravimo, končno smrt, posebej pri majhnih otrocih. Lahko se pojavijo tudi pozni zapleti, ki privedejo do poškodb osrednjega živčevja ali do odpovedi ledvic pri črnosečni mrzlici.")
     } else if (input$bolezen == "prirojeni sifilis") {
-      besedilo <- c("Sifilis je spolno prenosljiva okužba, ki jo povzroča bakterija spiroheta. Glavna pot prenosa je s spolnim stikom; lahko se tudi prenaša z matere na zarodek med nosečnostjo ali ob porodu, kar ima za posledico prirojeni sifilis.", 
+      besedilo <- c("Sifilis je spolno prenosljiva okužba, ki jo povzroča bakterija spiroheta. Glavna pot prenosa je s spolnim stikom; lahko pa se prenese tudi z matere na zarodek med nosečnostjo ali ob porodu, kar ima za posledico prirojeni sifilis.", 
                     "Znaki in simptomi so trda in neboleča kožna razjeda, ki ne srbi; razpršen izpuščaj, ki pogosto vključuje dlani in podplate; živčni in srčni simptomi. Sifilis je mogoče učinkovito zdraviti z antibiotiki. Za sifilisom je v letu 1999 po vsem svetu zbolelo dodatno 12 milijonov ljudi, pri tem je več kot 90 % primerov bilo v državah v razvoju.")
     } else {
       besedilo <- c("Tuberkuloza ali jetika (zastarelo tudi sušica) je pogosta in mnogokrat smrtna nalezljiva bolezen, ki jo povzročajo različni mikobakterijski sevi. Tuberkuloza običajno okuži pljuča, lahko pa tudi druge telesne dele. Širi se po zraku, ko ljudje z aktivno tuberkulozno okužbo kašljajo, kihajo ali kako drugače prenašajo izdihano tekočino skozi zrak. Klasični znaki aktivne okužbe s tuberkulozo so kronični kašelj, krvav izmeček, vročica, nočno potenje in hujšanje.", 
@@ -50,7 +50,7 @@ shinyServer(function(input, output){
         geom_polygon(data = svet %>% left_join(hi, by = c("sovereignt" = "drzava")), 
                      color = "black", aes(x = long, y = lat, group = group, fill = pojavnost)) + 
         ggtitle("Razširjenost virusa HIV") + guides(fill = guide_colorbar(title = "Delež")) +
-        labs(caption = "Opomba: AIDS tu v resnici ne pomeni bolezni, pač pa označuje okužene z virusom hiv.")
+        labs(caption = "Opomba: AIDS tu v resnici ne pomeni bolezni, pač pa okuženost z virusom hiv.")
     } else if (input$bolezen == "kolera") { 
       kol <- filter(bolezni, leto == input$leto, bolezen == "kolera")
       kol$bolezen <- NULL
@@ -151,7 +151,7 @@ shinyServer(function(input, output){
   
   output$razlaga <- renderText({
     if (input$bolezen1 == "AIDS") {
-      besedilo <- "Iz zgornjega grafa je razvidno skrb vzbujajoče dejstvo, da se delež okuženih z virusom HIV ponekod giblje kar okoli ene četrtine. Se pa na srečo v večini (afriških) držav zmanjšuje. Veliko izjemo pa predstavlja država Svazi, kjer se le ta vztrajno povečuje."
+      besedilo <- "Iz zgornjega grafa je razvidno skrb vzbujajoče dejstvo, da se delež okuženih z virusom HIV ponekod giblje kar okoli ene četrtine. Se pa na srečo v večini (afriških) držav zmanjšuje. Veliko izjemo predstavlja država Svazi, kjer se le ta vztrajno povečuje."
     } else if (input$bolezen1 == "kolera") {
       besedilo <- "V letih 2010-2013 je bilo število obolelih za kolero daleč največje na Haitiju. To pripisujem katastrofalnemu potresu 12. 1. 2010 z močjo 7. stopnje po Richterjevi lestvici. Zabeleženih je bilo tudi vsaj 33 popotresnih sunkov, od tega 14 z magnitudo med 5,0 in 5,9."
     } else if (input$bolezen1 == "malarija") {

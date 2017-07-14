@@ -61,7 +61,7 @@ kable(head(tobak), align="cccc")
 
 Tabelo **tabela** gradita stolpca *drzava* (factor) in *dopust* (numeric, meritev), v katerem je shranjeno minimalno število plačanih prostih dni (vključno s prazniki) pri petdnevnem delovniku kot ga določa zakon. 
 
-Velja še omeniti, da ponekod to število določijo delodajalci, in da se praznik, ki pride na soboto ali nedeljo, v ZDA in UK premakne kot plačan dela prost dan na najbližji ponedeljek oz. petek. 
+Velja še omeniti, da ponekod to število določijo delodajalci, in da se praznik, ki pride na soboto ali nedeljo, v ZDA in UK premakne kot plačan dela prost dan na najbližji ponedeljek oz. petek.[^3] 
 
 ```{r tabela, echo=FALSE, message=FALSE}
 kable(head(tabela), align="cccc")
@@ -89,7 +89,7 @@ kable(kv, align = "cc")
 ```
 
 
-Spodnji graf prikazuje delež kadilcev med osebami, starimi vsaj 15 let, ločeno po spolu v letih 2000, 2005, 2010, 2012 in 2015. Presenetilo me je, da je delež kadilcev med moškimi (36.3%) veliko večji kot med ženskami (13.6%). (Slednja procenta sta izračunana kot povprečna deleža med letoma 2000 in 2015.)
+Spodnji graf prikazuje delež kadilcev med osebami, starimi vsaj 15 let, ločeno po spolu v letih 2000, 2005, 2010, 2012 in 2015. Presenetilo me je, da je delež kadilcev med moškimi (36.3 %) veliko večji kot med ženskami (13.6 %). (Slednja procenta sta izračunana kot povprečna deleža med letoma 2000 in 2015.)
 
 ```{r tobak, fig.align='center', echo=FALSE, message=FALSE}
 g_tb
@@ -106,7 +106,7 @@ Sprva sem hotela razvrstiti države glede na vse značilnosti, vendar sem ugotov
 
 Tako sem države razvrstila v pet skupin zgolj na podlagi dostopnosti pitne vode in denarnih sredstev za zdravstveno oskrbo, kar prikazuje spodnji zemljevid. Opazimo, da sta glede bolezni (glej interaktivni del poročila) najbolj kritični dve skupini, ki se deloma ujemata s skupinami na zemljevidu: prva predstavlja južni del Afrike, druga pa Južno in Jugovzhodno Azijo. V teh dveh skupinah sta dostop do pitne vode in denarna podprtost zdravstvenega sektorja zelo slaba (v prej omenjenem azijskem delu nekoliko boljša, zato je tudi pogostost bolezni manjša).
 
-S tem sem potrdila pričakovan rezultat: dostopnost do izboljšanega pitnega vodnega vira in količina sredstev namenjenih za zdravstveno porabo sta v močni negativni korelaciji z razširjenostjo proučevanih bolezni.
+S tem sem potrdila pričakovan rezultat: dostopnost do izboljšanega pitnega vodnega vira in količina sredstev namenjenih za zdravstveno porabo sta v močni negativni korelaciji z razširjenostjo proučevanih bolezni. Torej, če želimo imeti zdravo populacijo bo zagotovo v pomoč večja količina denarja, namenjenega za zdravstveno oskrbo in boljša preskrba s pitno vodo.
 
 ```{r razvrscanje, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
 g_zna
