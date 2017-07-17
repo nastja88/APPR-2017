@@ -74,7 +74,7 @@ kable(head(tabela), align="cccc")
 
 Na naslednjem grafu je prikazano število okuženih z malarijo v letih od 2000 do 2015, dodani so tudi kvartili porazdelitve. Opazen je velik trend naraščanja, pojavljajo pa se tudi države s čedalje večjim odstopanjem.
 
-```{r malarija1, fig.align='center', echo=FALSE, message=FALSE}
+```{r malarija, fig.align='center', echo=FALSE, message=FALSE}
 g_mal
 ```
 

@@ -51,11 +51,11 @@ worldbank$drzava[worldbank$drzava == "United States"] <- "United States of Ameri
 worldbank$drzava[worldbank$drzava == "Venezuela, RB"] <- "Venezuela"
 worldbank$drzava[worldbank$drzava == "Yemen, Rep."] <- "Yemen"
 
-# samo bolezni(iz worldbank-a)
+# samo bolezni (iz worldbank-a)
 bol <- filter(worldbank, worldbank$serija == "hiv" | worldbank$serija == "malarija") %>% 
   rename(bolezen = serija)
 
-# samo znacilnosti(iz worldbank-a)
+# samo znacilnosti (iz worldbank-a)
 znac <- filter(worldbank, worldbank$serija != "hiv" & worldbank$serija != "malarija") %>% 
   rename(znacilnost = serija)
 

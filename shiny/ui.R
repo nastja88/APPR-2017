@@ -15,7 +15,7 @@ shinyUI(fluidPage(
                              choices = c("AIDS", "kolera", "malarija", "prirojeni sifilis", "tuberkuloza"),
                              multiple = FALSE),
                  selectInput("leto", "Leto:", choices = 2000:2015, multiple = FALSE),
-                 p("Za izbrano bolezen je prikazan kratek opis značilnosti Sledi še zemljevid pojavnosti bolezni po državah v izbranem letu. (Za sivo obarvane države ni podatka.)")
+                 p("Za izbrano bolezen je prikazan kratek opis značilnosti. Sledi še zemljevid pojavnosti bolezni po državah v izbranem letu. (Za sivo obarvane države ni podatka.)")
                  ),
     
               mainPanel(uiOutput("opis"), uiOutput("povezava"), hr(), plotOutput("bolezni")))),

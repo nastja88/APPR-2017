@@ -2,7 +2,7 @@
 
 n <- 2010
 
-# države po skupinah glede na značilnosti
+# države po skupinah glede na značilnosti v letu 2000
 den <- filter(znacilnosti, leto == n, znacilnost == "denar") %>% rename(denar = pojavnost)
 den$znacilnost <- NULL
 den$leto <- NULL
